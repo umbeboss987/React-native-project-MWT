@@ -1,31 +1,39 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import {Provider} from 'react-redux';
-import createStore from './store/index'
+import {connect} from 'react-redux';
 import React, {Component} from 'react';
-import Test from './components/test'
-import { PersistGate } from 'redux-persist/integration/react'
+import {sProva} from '../store/selectors/appSelectors'
 
 
-const {store, persistor} = createStore();
-
-export default class App extends Component {
+class Test extends Component {
 
   constructor(props) {
     super(props);
   }
   render() {
     return (
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <View style={styles.container}>
-            <Test/>
+        <View style={styles.container}>
+          <StatusBar style="auto" />
+          <View>
+            <TouchableOpacity style={styles.button}
+            >
+              <Text style={styles.loginText} >{this.props.prova.state}</Text>
+            </TouchableOpacity>
           </View>
-        </PersistGate>
-      </Provider>
+        </View>
     );
   }
 }
+
+ function mapStateToProps(state) {
+    return {
+      prova: sProva(state),
+    };
+  }
+
+  export default connect(
+    mapStateToProps,
+  )(Test);
 
 const styles = StyleSheet.create({
   container: {

@@ -1,0 +1,1 @@
+export const sProva = (state) => state.appReducer;
