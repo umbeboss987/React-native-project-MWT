@@ -1,10 +1,9 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import {Provider} from 'react-redux';
 import createStore from './store/index'
 import React, {Component} from 'react';
-import Test from './components/test'
-import { PersistGate } from 'redux-persist/integration/react'
+import { PersistGate } from 'redux-persist/integration/react';
+import RootNavigator from './navigation/RootNavigator';
 
 
 const {store, persistor} = createStore();
@@ -18,8 +17,8 @@ export default class App extends Component {
     return (
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
+          <RootNavigator/>
           <View style={styles.container}>
-            <Test/>
           </View>
         </PersistGate>
       </Provider>
