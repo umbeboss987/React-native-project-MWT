@@ -1,17 +1,24 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import React, { Component } from 'react';
 
 
-export default function TestPage() {
-    return (
-        <View>
-            <StatusBar style="auto" />
+export default class TestPage extends Component {
+    constructor(props) {
+        super(props)
+    }
+    
+    render() {
+        return (
             <View>
-                <TouchableOpacity
-                >
-                    <Text >Login</Text>
-                </TouchableOpacity>
+                <StatusBar style="auto" />
+                <View>
+                    <TouchableOpacity
+                    >
+                        <Text >Login</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
-        </View>
-    );
+        )
+    }
 }
