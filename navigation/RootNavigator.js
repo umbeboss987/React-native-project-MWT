@@ -15,6 +15,7 @@ export default function RootNavigator (){
     return(
         <NavigationContainer>
             <RootStack.Navigator>
+                <RootStack.Screen options={{ headerShown: false }} name="Login" component={LoginPage} />
                 <React.Fragment>
                     <RootStack.Screen name="Home" component={Tabs} />
                 </React.Fragment>             
@@ -37,7 +38,6 @@ function Tabs (){
                 }
             }}
         >
-          <TabNavigator.Screen name="Login" component={LoginPage} />
           <TabNavigator.Screen name="Home" component={HomePage} 
             options={{
                 tabBarLabel: 'home',
