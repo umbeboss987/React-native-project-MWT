@@ -11,18 +11,24 @@ class LoginPage extends Component{
   render(){
     return(  
         <ImageBackground source={{uri:'https://anghamiwebcdn.akamaized.net/web/assets/img/landing/ManWeb_landing.png'}} style={styles.imageBackground}>
-          <View style={styles.container}>
-            <Image source={{uri:'https://logodownload.org/wp-content/uploads/2016/09/spotify-logo-branca-white.png'}} style={styles.image}>
+            <View style={styles.container}>
+              <Image source={{uri:'https://logodownload.org/wp-content/uploads/2016/09/spotify-logo-branca-white.png'}} style={styles.image}>
+              </Image>
+              <TextInput
+                style={styles.input}
+                placeholder="Username"
 
-            </Image>
-            <TextInput
-              style={styles.input}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Password"
-            />
-          </View>
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Password"
+              />
+              <TouchableOpacity onPress={()=>this.props.navigation.navigate('Home')}>
+                <View style={styles.button}>
+                  <Text style={styles.buttonText}>Login</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
         </ImageBackground>
     )};
 
@@ -49,11 +55,10 @@ class LoginPage extends Component{
 
   const styles = StyleSheet.create({
     container: {
-      position: 'relative',
-      flexDirection: 'column',
       justifyContent: 'center',
-      width: 250,
-      height: 300
+      alignItems: 'center',
+      flexDirection: 'column',
+      position: 'absolute',
     },
     imageBackground: {
       flex: 1,
@@ -61,24 +66,35 @@ class LoginPage extends Component{
       height: null,
       resizeMode: 'cover',
       backgroundColor: '#7b1fa2',
-      position: 'relative',
       alignItems: 'center',
       justifyContent: 'center',
     },
     image:{
       width:250,
       height: 250,
-      position: 'absolute',
-      bottom: 160,
+      bottom: 60,
       resizeMode: 'contain',
     },
     input: {
-      height: 40,
+      height: 45,
       margin: 12,
-      borderWidth: 1,
       padding: 10,
       borderRadius: 20,
-      backgroundColor: 'white'
+      backgroundColor: 'white',
+      width:300,
     },
+    button: {
+      backgroundColor: '#8e24aa',
+      width:250,
+      height:50,
+      borderRadius:20,
+      marginTop:30,
+    },
+    buttonText: {
+      textAlign: 'center',
+      marginTop: 15,
+      fontSize: 20,
+      color: 'white'
+    }
     
   });

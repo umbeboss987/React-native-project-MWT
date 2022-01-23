@@ -14,10 +14,19 @@ const RootStack = createNativeStackNavigator();
 export default function RootNavigator (){
     return(
         <NavigationContainer>
-            <RootStack.Navigator>
+            <RootStack.Navigator  screenOptions={{
+                headerStyle: { backgroundColor:'#4F0F59',
+                height: 100,
+                },
+                headerTintColor: '#fff',
+                headerTitleStyle: {
+                    fontWeight: 'bold',
+                    fontSize: 23
+                  },
+              }}>
                 <RootStack.Screen options={{ headerShown: false }} name="Login" component={LoginPage} />
                 <React.Fragment>
-                    <RootStack.Screen name="Home" component={Tabs} />
+                    <RootStack.Screen  name="Home" component={Tabs} />
                 </React.Fragment>             
             </RootStack.Navigator>            
         </NavigationContainer>
@@ -29,25 +38,46 @@ function Tabs (){
         <TabNavigator.Navigator
             tabBarOptions={{
                 showLabel: false,
-                style:{
-                    position: 'absolute',
-                    bottom: 25,
-                    left: 20,
-                    right: 20,
-                    heigth: 90
-                }
+                activeTintColor: 'white'
+               
             }}
+            screenOptions={{
+                tabBarStyle: { backgroundColor:'#4F0F59',
+                height: 100,
+                activeTintColor: '#cd077d',
+            },
+              }}
         >
           <TabNavigator.Screen name="Home" component={HomePage} 
             options={{
                 tabBarLabel: 'home',
-                tabBarColor: '#1f65ff',
+                tabBarColor: '#004991',
+                headerShown: false,
                 tabBarIcon: ({color}) => (
                 <Icon name="home" color={color} size={25} />
                 ),
             }}
           />
-           <TabNavigator.Screen name="Test" component={TestPage} />
+           <TabNavigator.Screen name="search" component={TestPage} 
+            options={{
+                tabBarLabel: 'search',
+                tabBarColor: '#1f65ff',
+                headerShown: false,
+                tabBarIcon: ({color}) => (
+                <Icon name="search" color={color} size={25} />
+                ),
+            }}
+           />
+           <TabNavigator.Screen name="Test" component={TestPage} 
+            options={{
+                tabBarLabel: 'library',
+                tabBarColor: '#1f65ff',
+                headerShown: false,
+                tabBarIcon: ({color}) => (
+                <Icon name="library" color={color} size={25} />
+                ),
+            }}
+           />
         </TabNavigator.Navigator>
     );
 }
