@@ -2,10 +2,10 @@ import { INITIAL_STATE } from "../state/state";
 
 export default function (state = INITIAL_STATE, action) {
     switch (action.type) {
-        case 'prova':
+        case 'LOAD_CATEGORIES_SUCCESS':
             return {
                 ...state,
-                state: state.state
+                categories: action.payload
             };
 
         default: 

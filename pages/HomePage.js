@@ -1,13 +1,24 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity , Image} from 'react-native';
 import {sProva} from '../store/selectors/appSelectors';
-import {prova} from '../store/actions/appActions';
+import {loadCategories} from '../store/actions/appActions';
 import {connect} from 'react-redux';
+import React, {Component} from 'react';
 
 
-function HomePage({navigation}) {
-    return (
-      <View style={styles.container}>
+class HomePage extends Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {
+    this.props.loadCategories();
+    console.log(this.props.loadCategories())
+  }
+    render() {
+      return(
+      <View style={styles.container} >
         <View style={styles.containerCategories}>
           <View style={styles.categories} >
             <Image source={{uri:'https://anghamiwebcdn.akamaized.net/web/assets/img/landing/ManWeb_landing.png'}} style={styles.imageBackground}>
@@ -31,8 +42,8 @@ function HomePage({navigation}) {
           </View>
         </View>
       </View>
-    );
-  }
+    )};
+}
   
   function mapStateToProps(state) {
     return {
@@ -42,8 +53,8 @@ function HomePage({navigation}) {
   
   function mapDispatchToProps(dispatch) {
     return {
-      prova: function() {
-        dispatch(prova(episode));
+      loadCategories: function() {
+        dispatch(loadCategories());
       },
     };
   }

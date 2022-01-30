@@ -1,12 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity, ImageBackground, Image, TextInput} from 'react-native';
 import {sProva} from '../store/selectors/appSelectors';
-import {prova} from '../store/actions/appActions';
+import {getUsers} from '../store/actions/appActions';
 import {connect} from 'react-redux';
 import React, {Component} from 'react';
+import LoginButton from '../components/LoginButton';
 
 
 class LoginPage extends Component{
+
+  componentDidMount() {
+    //this.props.getUsers();
+  }
 
   render(){
     return(  
@@ -23,11 +28,7 @@ class LoginPage extends Component{
                 style={styles.input}
                 placeholder="Password"
               />
-              <TouchableOpacity onPress={()=>this.props.navigation.navigate('Home')}>
-                <View style={styles.button}>
-                  <Text style={styles.buttonText}>Login</Text>
-                </View>
-              </TouchableOpacity>
+              <LoginButton/>
             </View>
         </ImageBackground>
     )};
@@ -42,8 +43,8 @@ class LoginPage extends Component{
   
   function mapDispatchToProps(dispatch) {
     return {
-      prova: function() {
-        dispatch(prova(episode));
+      getUsers: function() {
+        dispatch(getUsers());
       },
     };
    }
