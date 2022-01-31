@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity , Image} from 'react-native';
 import {sProva} from '../store/selectors/appSelectors';
-import {loadCategories} from '../store/actions/appActions';
+import {loadCategories, getUsers} from '../store/actions/appActions';
 import {connect} from 'react-redux';
 import React, {Component} from 'react';
 
@@ -14,7 +14,7 @@ class HomePage extends Component {
 
   componentDidMount() {
     this.props.loadCategories();
-    console.log(this.props.loadCategories())
+    this.props.getUsers();
   }
     render() {
       return(
@@ -28,7 +28,7 @@ class HomePage extends Component {
           <View style={styles.categories}>
            <Image source={{uri:'https://anghamiwebcdn.akamaized.net/web/assets/img/landing/ManWeb_landing.png'}} style={styles.imageBackground}>
 
-            </Image>
+           </Image>
           </View>
           <View style={styles.categories}>
             <Image source={{uri:'https://anghamiwebcdn.akamaized.net/web/assets/img/landing/ManWeb_landing.png'}} style={styles.imageBackground}>
@@ -56,6 +56,9 @@ class HomePage extends Component {
       loadCategories: function() {
         dispatch(loadCategories());
       },
+      getUsers: function(){
+        dispatch(getUsers());
+      }
     };
   }
   

@@ -10,7 +10,6 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(async (req) => {
   const access_token = await AsyncStorage.getItem("@access_token");
-  console.log(access_token);
   req.headers.Authorization = `Bearer ${access_token}`;
   return req;
 });

@@ -34,7 +34,6 @@ const LoginButton = () =>{
     useEffect (()=>{
         if(response?.type === "success"){
             const {access_token} = response.params
-            console.log(access_token);
             storeData(access_token);
             navigation.navigate("Home");
         }
