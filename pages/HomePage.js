@@ -1,9 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity , Image} from 'react-native';
-import {sProva} from '../store/selectors/appSelectors';
+import { StyleSheet, Text, View, TouchableOpacity , Image, ScrollView, FlatList,SectionList} from 'react-native';
+import {sProva, sCategories} from '../store/selectors/appSelectors';
 import {loadCategories, getUsers} from '../store/actions/appActions';
 import {connect} from 'react-redux';
 import React, {Component} from 'react';
+import Categories from '../components/Categories';
 
 
 class HomePage extends Component {
@@ -13,33 +14,29 @@ class HomePage extends Component {
   }
 
   componentDidMount() {
-    this.props.loadCategories();
     this.props.getUsers();
+    this.props.loadCategories();
   }
     render() {
+      const {categories} = this.props; 
+      console.log(categories);
+      const section = {
+        title : "Categories",
+        data: categories
+      }
       return(
       <View style={styles.container} >
+        <Text style={styles.title}>Categories</Text>
         <View style={styles.containerCategories}>
-          <View style={styles.categories} >
-            <Image source={{uri:'https://anghamiwebcdn.akamaized.net/web/assets/img/landing/ManWeb_landing.png'}} style={styles.imageBackground}>
+          <SectionList  horizontal={true} showsHorizontalScrollIndicator={true} section={section} renderItem={({item})=>(
+            <Categories key={item.id} title={JSON.stringify(item.name)} images={item.icons[0].url}/>
+          )}
+          renderSectionHeader={({ section: { title} }) => (
+            <Text style={styles.title}>{title}</Text>
+          )}
+          keyExtractor={(item, index) => item + index}
 
-            </Image>
-          </View>
-          <View style={styles.categories}>
-           <Image source={{uri:'https://anghamiwebcdn.akamaized.net/web/assets/img/landing/ManWeb_landing.png'}} style={styles.imageBackground}>
-
-           </Image>
-          </View>
-          <View style={styles.categories}>
-            <Image source={{uri:'https://anghamiwebcdn.akamaized.net/web/assets/img/landing/ManWeb_landing.png'}} style={styles.imageBackground}>
-
-            </Image>
-          </View>
-          <View style={styles.categories}>
-            <Image source={{uri:'https://anghamiwebcdn.akamaized.net/web/assets/img/landing/ManWeb_landing.png'}} style={styles.imageBackground}>
-
-            </Image> 
-          </View>
+          />
         </View>
       </View>
     )};
@@ -48,6 +45,7 @@ class HomePage extends Component {
   function mapStateToProps(state) {
     return {
       prova: sProva(state),
+      categories: sCategories(state),
     };
   }
   
@@ -96,5 +94,10 @@ class HomePage extends Component {
       alignItems: 'center',
       justifyContent: 'center',
     },
+    title:{
+      fontSize: 40,
+      color: 'white',
+      flex:1
+  }
   })
   
