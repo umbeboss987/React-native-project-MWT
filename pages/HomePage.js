@@ -17,26 +17,29 @@ class HomePage extends Component {
     this.props.getUsers();
     this.props.loadCategories();
   }
+
+  
     render() {
       const {categories} = this.props; 
-      console.log(categories);
-      const section = {
-        title : "Categories",
-        data: categories
-      }
+     
       return(
       <View style={styles.container} >
-        <Text style={styles.title}>Categories</Text>
         <View style={styles.containerCategories}>
-          <SectionList  horizontal={true} showsHorizontalScrollIndicator={true} section={section} renderItem={({item})=>(
-            <Categories key={item.id} title={JSON.stringify(item.name)} images={item.icons[0].url}/>
-          )}
-          renderSectionHeader={({ section: { title} }) => (
-            <Text style={styles.title}>{title}</Text>
-          )}
-          keyExtractor={(item, index) => item + index}
-
-          />
+          <Text style={styles.title}>Categories</Text>
+          <View >
+            <FlatList
+              data={categories}
+              renderItem={({item})=>{
+              return (
+              <Categories title={item.name} key={item.id} images={item.icons[0].url}/>
+              )
+              }}
+              horizontal={true}
+            />
+          </View>
+        </View>
+        <View>
+          <Text>Dio cane</Text>
         </View>
       </View>
     )};
@@ -69,21 +72,7 @@ class HomePage extends Component {
     container: {
       backgroundColor: '#010916',
       flex: 1,
-      flexDirection: 'row',
-      justifyContent: 'center'
-    },
-    categories: {
-      width:180,
-      height: 180,
-      backgroundColor: 'white',
-      margin: 10,
-      marginTop:30
-    },
-    containerCategories: {
-      flexDirection: 'row',
-      marginTop: 10,
-      flexWrap: 'wrap',
-      margin: 10,
+      flexDirection: 'column',
     },
     imageBackground: {
       flex: 1,
@@ -97,7 +86,10 @@ class HomePage extends Component {
     title:{
       fontSize: 40,
       color: 'white',
-      flex:1
-  }
+    },
+    containerCategories:{
+      marginLeft:10,
+      marginTop:10,
+    }
   })
   
