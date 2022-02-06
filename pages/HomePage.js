@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity , Image, ScrollView, FlatList,SectionList} from 'react-native';
-import {sProva, sCategories} from '../store/selectors/appSelectors';
-import {loadCategories, getUsers} from '../store/actions/appActions';
+import { StyleSheet, Text, View, TouchableOpacity , Image, ScrollView, FlatList,SectionList,SafeAreaView} from 'react-native';
+import {sProva, sCategories,sAlbums} from '../store/selectors/appSelectors';
+import {loadCategories, getUsers, loadAlbums} from '../store/actions/appActions';
 import {connect} from 'react-redux';
 import React, {Component} from 'react';
 import Categories from '../components/Categories';
@@ -16,31 +16,48 @@ class HomePage extends Component {
   componentDidMount() {
     this.props.getUsers();
     this.props.loadCategories();
+    this.props.loadAlbums();
   }
 
   
     render() {
       const {categories} = this.props; 
-     
+      const {albums} = this.props;
       return(
       <View style={styles.container} >
-        <View style={styles.containerCategories}>
-          <Text style={styles.title}>Categories</Text>
-          <View >
-            <FlatList
-              data={categories}
-              renderItem={({item})=>{
-              return (
-              <Categories title={item.name} key={item.id} images={item.icons[0].url}/>
-              )
-              }}
-              horizontal={true}
-            />
-          </View>
-        </View>
-        <View>
-          <Text>Dio cane</Text>
-        </View>
+        <SafeAreaView>
+          <ScrollView>
+                <View style={styles.containerCategories}>
+                  <Text style={styles.title}>Categories</Text>
+                  <View >
+                  <ScrollView horizontal={true}>
+                    {categories.map((category)=>{
+                      return(
+                          <Categories title={category.name} key={category.id} images={category.icons[0].url}/>
+                        )
+                      })} 
+                  </ScrollView>
+
+                  </View>
+                </View>
+              <View style={styles.containerCategories}>
+                <Text style={styles.title}>New Releases</Text>
+                <ScrollView 
+                  contentContainerStyle={{
+                  flexDirection: 'row',
+                  flexWrap: 'wrap'}}
+                >
+                  {albums.items.map((album)=>{
+                    return(
+                      <View>
+                        <Categories title={album.name} key={album.id} images={album.images[0].url}/>
+                      </View>
+                        )
+                      })}
+                </ScrollView> 
+              </View>
+          </ScrollView>
+        </SafeAreaView>
       </View>
     )};
 }
@@ -49,6 +66,7 @@ class HomePage extends Component {
     return {
       prova: sProva(state),
       categories: sCategories(state),
+      albums: sAlbums(state)
     };
   }
   
@@ -59,7 +77,10 @@ class HomePage extends Component {
       },
       getUsers: function(){
         dispatch(getUsers());
-      }
+      },
+      loadAlbums: function() {
+        dispatch(loadAlbums());
+      },
     };
   }
   
@@ -90,6 +111,10 @@ class HomePage extends Component {
     containerCategories:{
       marginLeft:10,
       marginTop:10,
+    },
+    albums:{
+      flexDirection: 'row',
+      flexWrap: 'wrap'
     }
   })
   

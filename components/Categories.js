@@ -1,31 +1,33 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity , Image} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity , Image, ScrollView} from 'react-native';
 
 const Categories = ({ title, images }) => {
   return (
-    <View>
-        <TouchableOpacity>
-        <View style={styles.categories} >
-                <Image source={{ uri:images}} style={styles.imageBackground}>
-                </Image>
-        </View>
-        </TouchableOpacity>
-        <Text styles={styles.text}>{title}</Text>
-    </View>
+      <View>
+          <TouchableOpacity>
+            <View style={styles.categories} >
+                    <Image source={{ uri:images}} style={styles.imageBackground}>
+                    </Image>
+            </View>
+          </TouchableOpacity>
+          <Text styles={styles.text}>{title}</Text>
+      </View>
   );
 };
 
 const styles = StyleSheet.create({
 
   imageBackground: {
-    height: 230,
-    width: 230,
+    height: 170,
+    width: 195,
     flex: 1,
   },
   categories: {
-    margin: 10,
-    height: 230,
-    width: 230,
+    marginTop:30,
+    marginLeft:10,
+    marginRight: 27,
+    height: 150,
+    width: 170,
     justifyContent: 'center', 
     alignItems: 'center'
   },

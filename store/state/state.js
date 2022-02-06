@@ -1,4 +1,6 @@
 export const INITIAL_STATE = {
     state : 'dentro stato',
-    categories :[]
+    categories :[],
+    generes:[],
+    albums: []
 }
