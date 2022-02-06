@@ -2,9 +2,10 @@ import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const axiosInstance = axios.create({
-  baseURL: `https://api.spotify.com/v1`,
+  baseURL: `https://api.spotify.com/v1/`,
   headers: {
     "Content-Type": "application/json",
+    "Accept" :"application/json",
   },
 });
 

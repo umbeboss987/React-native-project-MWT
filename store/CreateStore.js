@@ -7,7 +7,7 @@ import thunk from 'redux-thunk';
 
 const persistConfig = {
   key: 'root',
-  storage: AsyncStorage
+  storage: AsyncStorage,
 }
 
 export default (reducers) =>{

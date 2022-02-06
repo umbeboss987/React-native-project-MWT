@@ -35,7 +35,7 @@ const LoginButton = () =>{
         if(response?.type === "success"){
             const {access_token} = response.params
             storeData(access_token);
-            navigation.navigate("Home");
+            navigation.navigate("Tab", {screen: 'LoginPage'});
         }
     },[response])
 

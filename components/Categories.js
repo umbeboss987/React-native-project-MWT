@@ -1,10 +1,12 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity , Image, ScrollView} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-const Categories = ({ title, images }) => {
+
+const Categories = ({ title, images, onPress }) => {
   return (
       <View>
-          <TouchableOpacity>
+          <TouchableOpacity {...{onPress}}>
             <View style={styles.categories} >
                     <Image source={{ uri:images}} style={styles.imageBackground}>
                     </Image>

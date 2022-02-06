@@ -7,24 +7,26 @@ export default function (state = INITIAL_STATE, action) {
                 ...state,
                 categories: action.payload
             }
-
-        case 'GET_USERS':
-            return {
-                ...state,
-                state: action.payload
-            };
          case 'LOAD_GENERES_SUCCESS':
             return {
             ...state,
             generes: action.payload
         };
-        case 'LOAD_ALBUMS_SUCCESS':
+        case 'LOAD_NEW_RELEASES_SUCCESS':
             return {
             ...state,
-            albums: action.payload
+            newReleases: action.payload
         };
-    
-
+        case 'LOAD_NEW_PLAYLIST_SUCCESS':
+            return {
+            ...state,
+            newPlaylist: action.payload
+        };
+        case 'LOAD_SINGLE_CATEGORIES_SUCCESS':
+            return {
+            ...state,
+            singleCategory: action.payload
+        };
         default:
             return state
     }

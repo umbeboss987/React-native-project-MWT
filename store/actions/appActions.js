@@ -1,32 +1,14 @@
-import {GET_USERS, USERS_ERROR, LOAD_CATEGORIES_SUCCESS,LOAD_CATEGORIES_ERROR, LOAD_ALBUMS_SUCCESS} from './ActionTypes'
+import { LOAD_CATEGORIES_SUCCESS,LOAD_CATEGORIES_ERROR,LOAD_NEW_PLAYLIST_ERROR,LOAD_SINGLE_CATEGORIES_ERROR,LOAD_SINGLE_CATEGORIES_SUCCESS, LOAD_NEW_PLAYLIST_SUCCESS, LOAD_NEW_RELEASES_SUCCESS, LOAD_ALBUMS_ERROR} from './ActionTypes'
 import axios from 'axios';
 import axiosInstance from '../../interceptor/index';
-
-export const getUsers = () => async dispatch => {
-    
-    try{
-        const res = await axios.get(`http://jsonplaceholder.typicode.com/users`)
-        dispatch( {
-            type: GET_USERS,
-            payload: res.data
-        })
-    }
-    catch(e){
-        dispatch( {
-            type: USERS_ERROR,
-            payload: console.log(e),
-        })
-    }
-
-}
 
 export const loadCategories = () => async dispatch => {
     
     try{
-        const res = await axiosInstance.get(`browse/categories`)
+        const res = await axiosInstance.get(`browse/categories/toplists/playlists`)
         dispatch({
             type: LOAD_CATEGORIES_SUCCESS,
-            payload: res.data.categories.items
+            payload: res.data.playlists.items
         })
     }
     catch(e){
@@ -38,18 +20,54 @@ export const loadCategories = () => async dispatch => {
 
 }
 
-export const loadAlbums = () => async dispatch => {
+export const loadNewReleases = () => async dispatch => {
     
     try{
         const res = await axiosInstance.get(`browse/new-releases`)
         dispatch({
-            type: LOAD_ALBUMS_SUCCESS,
+            type: LOAD_NEW_RELEASES_SUCCESS,
             payload: res.data.albums
         })
     }
     catch(e){
         dispatch( {
             type: LOAD_CATEGORIES_ERROR,
+            payload: console.log(e),
+        })
+    }
+
+}
+
+export const loadNewPlaylist = () => async dispatch => {
+    
+    try{
+        const res = await axiosInstance.get(`browse/featured-playlists`)
+        dispatch({
+            type: LOAD_NEW_PLAYLIST_SUCCESS,
+            payload: res.data
+        })
+    }
+    catch(e){
+        dispatch( {
+            type: LOAD_NEW_PLAYLIST_ERROR,
+            payload: console.log(e),
+        })
+    }
+
+}
+
+export const loadSingleCategory = (id) => async dispatch => {
+    
+    try{
+        const res = await axiosInstance.get(`/playlists/${id}`);
+        dispatch({
+            type: LOAD_SINGLE_CATEGORIES_SUCCESS,
+            payload: res.data
+        })
+    }
+    catch(e){
+        dispatch( {
+            type: LOAD_SINGLE_CATEGORIES_ERROR,
             payload: console.log(e),
         })
     }

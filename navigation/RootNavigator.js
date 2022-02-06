@@ -7,6 +7,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import HomePage from '../pages/HomePage';
 import TestPage from '../pages/TestPage';
 import LoginPage from '../pages/LoginPage';
+import AlbumPage from '../pages/AlbumPage';
+
 
 const TabNavigator = createBottomTabNavigator();
 const RootStack = createNativeStackNavigator();
@@ -26,8 +28,9 @@ export default function RootNavigator (){
               }}>
                 <RootStack.Screen options={{ headerShown: false }} name="Login" component={LoginPage} />
                 <React.Fragment>
-                    <RootStack.Screen  name="Home" component={Tabs} />
-                </React.Fragment>             
+                    <RootStack.Screen options={{ headerShown: false }} name="Tab" component={Tabs} />
+                </React.Fragment> 
+                <RootStack.Screen name="Album" component={AlbumPage} />            
             </RootStack.Navigator>            
         </NavigationContainer>
     )

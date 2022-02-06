@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity , Image, ScrollView, FlatList,SectionList,SafeAreaView} from 'react-native';
-import {sProva, sCategories,sAlbums} from '../store/selectors/appSelectors';
-import {loadCategories, getUsers, loadAlbums} from '../store/actions/appActions';
+import {sProva, sCategories,sNewPlaylist, sNewReleases} from '../store/selectors/appSelectors';
+import {loadCategories, getUsers, loadNewPlaylist, loadNewReleases} from '../store/actions/appActions';
 import {connect} from 'react-redux';
 import React, {Component} from 'react';
 import Categories from '../components/Categories';
@@ -14,15 +14,17 @@ class HomePage extends Component {
   }
 
   componentDidMount() {
-    this.props.getUsers();
     this.props.loadCategories();
-    this.props.loadAlbums();
+    this.props.loadNewReleases();
+    this.props.loadNewPlaylist();
   }
 
   
     render() {
       const {categories} = this.props; 
-      const {albums} = this.props;
+      const {newReleases} = this.props;
+      const {newPlaylist} = this.props; 
+      const {navigation} = this.props;
       return(
       <View style={styles.container} >
         <SafeAreaView>
@@ -31,9 +33,22 @@ class HomePage extends Component {
                   <Text style={styles.title}>Categories</Text>
                   <View >
                   <ScrollView horizontal={true}>
-                    {categories.map((category)=>{
+                    { categories.map((category)=>{
                       return(
-                          <Categories title={category.name} key={category.id} images={category.icons[0].url}/>
+                          <Categories onPress={()=>{navigation.navigate('Album', category)}} title={category.name} key={category.id} images={category.images[0].url} />
+                        )
+                      })} 
+                  </ScrollView>
+
+                  </View>
+                </View>
+                <View style={styles.containerCategories}>
+                  <Text style={styles.title}>New PlayList</Text>
+                  <View >
+                  <ScrollView horizontal={true}>
+                    {newPlaylist.playlists.items.map((item)=>{
+                      return(
+                          <Categories onPress={()=>{navigation.navigate('Album', item)}} title={item.name} key={item.id} images={item.images[0].url}/>
                         )
                       })} 
                   </ScrollView>
@@ -47,10 +62,10 @@ class HomePage extends Component {
                   flexDirection: 'row',
                   flexWrap: 'wrap'}}
                 >
-                  {albums.items.map((album)=>{
+                  {newReleases.items.map((album)=>{
                     return(
                       <View>
-                        <Categories title={album.name} key={album.id} images={album.images[0].url}/>
+                        <Categories title={album.name} key={album.id} images={album.images[0].url} />
                       </View>
                         )
                       })}
@@ -60,13 +75,15 @@ class HomePage extends Component {
         </SafeAreaView>
       </View>
     )};
+
 }
   
   function mapStateToProps(state) {
     return {
       prova: sProva(state),
       categories: sCategories(state),
-      albums: sAlbums(state)
+      newReleases: sNewReleases(state),
+      newPlaylist : sNewPlaylist(state),
     };
   }
   
@@ -78,8 +95,11 @@ class HomePage extends Component {
       getUsers: function(){
         dispatch(getUsers());
       },
-      loadAlbums: function() {
-        dispatch(loadAlbums());
+      loadNewReleases: function() {
+        dispatch(loadNewReleases());
+      },
+      loadNewPlaylist: function() {
+        dispatch(loadNewPlaylist());
       },
     };
   }
