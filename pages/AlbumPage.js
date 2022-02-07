@@ -15,7 +15,7 @@ function AlbumPage ({ singleCategory, route, loadSingleCategory}){
 
     return (
     <ScrollView style>
-        <LinearGradient colors={['transparent','#010916', '#010916','#010916','#010916','#010916', '#010916','#010916','#010916','#010916','#010916','#010916','#010916','#010916','#010916','#010916','#010916','#010916','#010916','#010916']}>
+        <LinearGradient start={{x:0.5, y:0.2}} colors={['#bbdefb','#010916']}>
             <View style={styles.container}>
                     <View style={styles.containerImage}>
                         <Image source={{uri:singleCategory.images[0].url}} style={styles.image}>
@@ -26,6 +26,8 @@ function AlbumPage ({ singleCategory, route, loadSingleCategory}){
                     </View>
                 
             </View>
+        </LinearGradient>
+        <LinearGradient start={{x:0.001, y:0.1}} colors={['#010916','#010916','#010916','#010916','#010916']}>
             <View style={styles.secondContainer}>
                 <ScrollView>
                     {singleCategory.tracks.items.map(track =>{
