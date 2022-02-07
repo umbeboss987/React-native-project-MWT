@@ -4,38 +4,41 @@ import { connect } from "react-redux";
 import { useEffect } from 'react';
 import {sCategories, sSingleCategory} from '../store/selectors/appSelectors';
 import {loadSingleCategory} from '../store/actions/appActions';
+import {LinearGradient} from 'expo-linear-gradient';
 
 function AlbumPage ({ singleCategory, route, loadSingleCategory}){
 
     useEffect(() =>{
         const {id} = route.params;
         loadSingleCategory(id)
-    }, [loadSingleCategory(id)])
+    }, [loadSingleCategory()])
 
     return (
     <ScrollView style>
-        <View style={styles.container}>
-                <View style={styles.containerImage}>
-                    <Image source={{uri:singleCategory.images[0].url}} style={styles.image}>
-                    </Image>
-                    <View style={styles.nameContainer}>
-                    <Text style={styles.name}>{singleCategory.name}</Text>
+        <LinearGradient colors={['#010920', '#010916']}>
+            <View style={styles.container}>
+                    <View style={styles.containerImage}>
+                        <Image source={{uri:singleCategory.images[0].url}} style={styles.image}>
+                        </Image>
+                        <View style={styles.nameContainer}>
+                        <Text style={styles.name}>{singleCategory.name}</Text>
+                        </View>
                     </View>
-                </View>
-               
-        </View>
-         <View style={styles.secondContainer}>
-            <ScrollView>
-                {singleCategory.tracks.items.map(track =>{
-                return(    
-                <TouchableOpacity>
-                    <View style={styles.containerSongs}>
-                        <Text style={styles.name}>{track.track.name}</Text>
-                    </View>
-                </TouchableOpacity>
-                )})}
-            </ScrollView>
-        </View>
+                
+            </View>
+            <View style={styles.secondContainer}>
+                <ScrollView>
+                    {singleCategory.tracks.items.map(track =>{
+                    return(    
+                    <TouchableOpacity>
+                        <View style={styles.containerSongs}>
+                            <Text style={styles.name}>{track.track.name}</Text>
+                        </View>
+                    </TouchableOpacity>
+                    )})}
+                </ScrollView>
+            </View>
+        </LinearGradient>
     </ScrollView>
 
     )
