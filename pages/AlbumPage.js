@@ -15,7 +15,7 @@ function AlbumPage ({ singleCategory, route, loadSingleCategory}){
 
     return (
     <ScrollView style>
-        <LinearGradient colors={['#010920', '#010916']}>
+        <LinearGradient colors={['transparent','#010916', '#010916','#010916','#010916','#010916', '#010916','#010916','#010916','#010916','#010916','#010916','#010916','#010916','#010916','#010916','#010916','#010916','#010916','#010916']}>
             <View style={styles.container}>
                     <View style={styles.containerImage}>
                         <Image source={{uri:singleCategory.images[0].url}} style={styles.image}>
@@ -32,7 +32,8 @@ function AlbumPage ({ singleCategory, route, loadSingleCategory}){
                     return(    
                     <TouchableOpacity>
                         <View style={styles.containerSongs}>
-                            <Text style={styles.name}>{track.track.name}</Text>
+                            <Text style={styles.songName}>{track.track.name}</Text>
+                            <Text style={styles.artistName}>{track.track.artists[0].name}</Text>
                         </View>
                     </TouchableOpacity>
                     )})}
@@ -47,7 +48,6 @@ function AlbumPage ({ singleCategory, route, loadSingleCategory}){
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#010920', 
         flex: 1,
         flexDirection: 'column',
       },
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     },
     name:{
         color: 'white',
-        fontSize: 20,
+        fontSize: 30,
         marginTop:15
     },
     containerSongs:{
@@ -70,9 +70,15 @@ const styles = StyleSheet.create({
         marginTop:30,
         marginLeft: 20
     },
-    secondContainer:{
-        backgroundColor: '#010916'
-    }
+   songName:{
+       fontSize:18,
+       color: 'white'
+   },
+   artistName:{
+    fontSize:14,
+    color: 'grey',
+    marginTop:5
+   }
   
 })
 
