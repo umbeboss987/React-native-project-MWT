@@ -8,6 +8,8 @@ import HomePage from '../pages/HomePage';
 import TestPage from '../pages/TestPage';
 import LoginPage from '../pages/LoginPage';
 import AlbumPage from '../pages/AlbumPage';
+import UserPlaylistPage from '../pages/UserPlaylistPage';
+
 
 
 const TabNavigator = createBottomTabNavigator();
@@ -71,7 +73,7 @@ function Tabs (){
                 ),
             }}
            />
-           <TabNavigator.Screen name="Test" component={TestPage} 
+           <TabNavigator.Screen name="Playlits" component={UserPlaylistPage} 
             options={{
                 tabBarLabel: 'library',
                 tabBarColor: '#1f65ff',
