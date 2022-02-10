@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import HomePage from '../pages/HomePage';
-import TestPage from '../pages/TestPage';
+import SearchPage from '../pages/SearchPage';
 import LoginPage from '../pages/LoginPage';
 import AlbumPage from '../pages/AlbumPage';
 import UserPlaylistPage from '../pages/UserPlaylistPage';
@@ -63,7 +63,7 @@ function Tabs (){
                 ),
             }}
           />
-           <TabNavigator.Screen name="search" component={TestPage} 
+           <TabNavigator.Screen name="search" component={SearchPage} 
             options={{
                 tabBarLabel: 'search',
                 tabBarColor: '#1f65ff',
