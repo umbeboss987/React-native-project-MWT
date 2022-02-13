@@ -1,8 +1,13 @@
 export const INITIAL_STATE = {
-    state : 'dentro stato',
     categories :[],
     generes:[],
     newReleases: [],
     newPlaylist: [],
-    singleCategory:[]
+    singleCategory:[],
+    search: [],
+    loadingCategories:false,
+    loadingGeneres:false,
+    loadingNewReleases:false,
+    loadingsingleCategory:false,
+    loadingNewPlaylist:false,
 }

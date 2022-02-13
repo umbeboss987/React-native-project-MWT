@@ -23,8 +23,7 @@ function AlbumPage ({ singleCategory, route, loadSingleCategory}){
                         <View style={styles.nameContainer}>
                         <Text style={styles.name}>{singleCategory.name}</Text>
                         </View>
-                    </View>
-                
+                    </View>         
             </View>
         </LinearGradient>
         <LinearGradient start={{x:0.001, y:0.1}} colors={['#010916','#010916','#010916','#010916','#010916']}>
@@ -80,8 +79,7 @@ const styles = StyleSheet.create({
     fontSize:14,
     color: 'grey',
     marginTop:5
-   }
-  
+   } 
 })
 
 
