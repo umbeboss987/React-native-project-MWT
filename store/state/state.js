@@ -8,6 +8,6 @@ export const INITIAL_STATE = {
     loadingCategories:false,
     loadingGeneres:false,
     loadingNewReleases:false,
-    loadingsingleCategory:false,
+    loadingSingleCategory:false,
     loadingNewPlaylist:false,
 }

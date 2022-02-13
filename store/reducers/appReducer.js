@@ -36,7 +36,6 @@ export default function (state = INITIAL_STATE, action) {
             loadingNewReleases: false
         };
         case 'LOAD_NEW_PLAYLIST':
-            console.log("entrato")
             return {
             ...state,
             loadingNewPlaylist: true
@@ -47,9 +46,15 @@ export default function (state = INITIAL_STATE, action) {
             newPlaylist: action.payload,
             loadingNewPlaylist: false
         };
+        case 'LOAD_SINGLE_CATEGORIES':
+            return {
+            ...state,
+            loadingSingleCategory: true
+        };
         case 'LOAD_SINGLE_CATEGORIES_SUCCESS':
             return {
             ...state,
+            loadingSingleCategory: false,
             singleCategory: action.payload
         };
         case 'LOAD_SEARCH_SUCCESS':

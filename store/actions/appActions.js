@@ -8,6 +8,7 @@ import { LOAD_CATEGORIES_SUCCESS,
         LOAD_SEARCH_ERROR, 
         LOAD_SINGLE_CATEGORIES_ERROR,
         LOAD_USER_PLAYLIST_SUCCESS,
+        LOAD_SINGLE_CATEGORIES,
         LOAD_SINGLE_CATEGORIES_SUCCESS,
         LOAD_NEW_PLAYLIST_SUCCESS, 
         LOAD_NEW_RELEASES_SUCCESS, 
@@ -81,6 +82,10 @@ export const loadNewPlaylist = () => async dispatch => {
 }
 
 export const loadSingleCategory = (id) => async dispatch => {
+
+    dispatch({
+        type:LOAD_SINGLE_CATEGORIES
+    })
     
     try{
         const res = await axiosInstance.get(`/playlists/${id}`);
