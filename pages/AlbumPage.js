@@ -1,33 +1,41 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity , Image, ScrollView, ActivityIndicator} from 'react-native';
-import { connect, useDispatch } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { useEffect} from 'react';
 import {sCategories, sSingleCategory, sLoadingSingleCategory} from '../store/selectors/appSelectors';
 import {loadSingleCategory} from '../store/actions/appActions';
 import {LinearGradient} from 'expo-linear-gradient';
 
-function AlbumPage ({ singleCategory, route, loadingSingleCategory}){
-
-    const dispatch = useDispatch();
-
+function AlbumPage ({loadingSingleCategory, route,loadSingleCategory}){
 
     useEffect(() =>{
-        const {id} = route.params;
-        dispatch(loadSingleCategory(id))
-    }, [])
+      const {id} = route.params;
+        loadSingleCategory(id);
+    },[loadSingleCategory])
 
-    return (
-    <>
-    { !loadingSingleCategory ?(
+    const singleCategory = useSelector((state) =>{return state.appReducer.singleCategory})
+
+    
+    if(loadingSingleCategory){
+
+        return(
+            <View style={styles.secondContainer}>
+                <ActivityIndicator size="large"/>
+            </View>
+        )
+    }
+    if(!loadingSingleCategory){
+    return (      
     <ScrollView style>
         <LinearGradient start={{x:0.5, y:0.2}} colors={['#bbdefb','#010916']}>
         
             <View style={styles.container}>
                     <View style={styles.containerImage}>
-                        <Image source={{uri:singleCategory?.images[0].url}} style={styles.image}>
+                        
+                        <Image source={{uri:singleCategory.images[0].url}} style={styles.image}>
                         </Image>
                         <View style={styles.nameContainer}>
-                        <Text style={styles.name}>{singleCategory?.name}</Text>
+                        <Text style={styles.name}>{singleCategory.name}</Text>
                         </View>
                     </View>         
             </View>
@@ -35,7 +43,7 @@ function AlbumPage ({ singleCategory, route, loadingSingleCategory}){
         <LinearGradient start={{x:0.001, y:0.1}} colors={['#010916','#010916','#010916','#010916','#010916']}>
             <View style={styles.secondContainer}>
                 <ScrollView>
-                    {singleCategory?.tracks.items.map(track =>{
+                    {singleCategory.tracks.items.map(track =>{
                     return(    
                     <TouchableOpacity>
                         <View style={styles.containerSongs}>
@@ -48,13 +56,8 @@ function AlbumPage ({ singleCategory, route, loadingSingleCategory}){
             </View>
         </LinearGradient>
     </ScrollView>
-    ) : 
-    <View style={styles.secondContainer}>
-        <ActivityIndicator/>
-    </View>
-    }
-    </>
     )
+  }
 }
 
 

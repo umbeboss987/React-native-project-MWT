@@ -3,11 +3,11 @@ export const INITIAL_STATE = {
     generes:[],
     newReleases: [],
     newPlaylist: [],
-    singleCategory:[],
+    singleCategory:{},
     search: [],
     loadingCategories:false,
     loadingGeneres:false,
     loadingNewReleases:false,
-    loadingSingleCategory:false,
+    loadingSingleCategory:true,
     loadingNewPlaylist:false,
 }

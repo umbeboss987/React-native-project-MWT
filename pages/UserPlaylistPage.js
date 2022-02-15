@@ -23,7 +23,7 @@ function UserPlaylistPage ({loadUserPlaylist, userPlaylist}){
                     <ScrollView>
                     {userPlaylist.items?.map(playlist =>{
                     return(    
-                    <TouchableOpacity>
+                    <TouchableOpacity key={playlist.id}>
                         <View style={styles.containerSongs}>
                             <Text style={styles.songName}>{playlist.name}</Text>
                         </View>

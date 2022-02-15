@@ -9,6 +9,7 @@ import SearchPage from '../pages/SearchPage';
 import LoginPage from '../pages/LoginPage';
 import AlbumPage from '../pages/AlbumPage';
 import UserPlaylistPage from '../pages/UserPlaylistPage';
+import UserProfilePage from '../pages/UserProfilePage';
 
 
 
@@ -32,7 +33,8 @@ export default function RootNavigator (){
                 <React.Fragment>
                     <RootStack.Screen options={{ headerShown: false }} name="Tab" component={Tabs} />
                 </React.Fragment> 
-                <RootStack.Screen name="Album" component={AlbumPage} />            
+                <RootStack.Screen name="Album" component={AlbumPage} /> 
+                <RootStack.Screen name="Profile" component={UserProfilePage}  />                       
             </RootStack.Navigator>            
         </NavigationContainer>
     )

@@ -1,27 +1,52 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, SafeAreaView, TextInput} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, SafeAreaView, TextInput, Item, FlatList} from 'react-native';
 import { SearchBar } from 'react-native-elements';
-import { connect } from "react-redux";
+import { connect , useSelector} from "react-redux";
+import {sUserPlaylist} from '../store/selectors/appSelectors';
 import { useEffect, useState} from 'react';
 import {loadSearchSong} from '../store/actions/appActions';
+import { ActivityIndicator } from "react-native-web";
 
 
-function SearchPage({loadSearchSong}){
+function SearchPage({loadSearchSong, searchSong}){
 
-        const [input, setInput] = useState("Type to search")
+        const [input, setInput] = useState("")
+        const songs = searchSong;
+        
+        const singleCategory = useSelector((state) =>{return state.appReducer.search})
 
+        
+        console.log(singleCategory)
+        const Item = ({ title }) => (
+            <View style={styles.item}>
+              <Text style={styles.titleSong}>{title}</Text>
+            </View>
+          );
+
+        const renderItem = ({ item }) => (
+            <Item title={item.name} />
+          );
+        
         return(
             <SafeAreaView style={styles.container}>
                 <View >
                     <Text style={styles.title}>Search Page</Text>
                     <View style={styles.searchContainer}>
                         <SearchBar style={styles.input}
-                         onChangeText={newInput => setInput(newInput)}
-                         placeholder={input}
-                         onSubmitEditing={loadSearchSong(input)}
-                         value={input}
+                          onChangeText={input => loadSearchSong(input)}
+                          placeholder={"Type to search"}
+                          value={input}
                         ></SearchBar>
                     </View>
+                </View>
+                <View style={styles.containerSongs}>
+                { singleCategory ?
+                <FlatList
+                    data={singleCategory}
+                    renderItem={renderItem}
+                    keyExtractor={item => item.id}
+                    />
+                : <ActivityIndicator/>}
                 </View>
             </SafeAreaView>
         )
@@ -48,13 +73,28 @@ const styles = StyleSheet.create({
     searchContainer:{
         width:400,
         marginTop:30
-    }
+    },
+    item: {
+        backgroundColor: '#f9c2ff',
+        padding: 20,
+        marginVertical: 8,
+        marginHorizontal: 16,
+        width: '100%'
+      },
+      titleSong: {
+        fontSize: 17,
+      },
+      containerSongs:{
+          flex:1,
+          marginTop: 40
+      }
 })
 
 
 
 function mapStateToProps(state) {
     return {
+        searchSong : sUserPlaylist (state)
     };
   }
   

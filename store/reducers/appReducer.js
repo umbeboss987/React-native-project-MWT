@@ -58,9 +58,12 @@ export default function (state = INITIAL_STATE, action) {
             singleCategory: action.payload
         };
         case 'LOAD_SEARCH_SUCCESS':
+           let albums = action.payload.albums.items;
+           let songs = action.payload.tracks.items;
+           Array.prototype.push.apply(albums, songs)
             return {
             ...state,
-            search: action.payload
+            search: albums
         };
         default:
             return state

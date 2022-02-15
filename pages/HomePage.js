@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity , Image, ScrollView, FlatList,SectionList,SafeAreaView, ActivityIndicator} from 'react-native';
 import {sProva, sCategories,sNewPlaylist, sNewReleases, sLoadingCategories, sLoadingNewRelease, sLoadingNewPlaylist} from '../store/selectors/appSelectors';
 import {loadCategories, getUsers, loadNewPlaylist, loadNewReleases} from '../store/actions/appActions';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {connect} from 'react-redux';
 import React, {Component} from 'react';
 import Categories from '../components/Categories';
@@ -35,7 +36,10 @@ class HomePage extends Component {
         <SafeAreaView>
           <ScrollView>
                 <View style={styles.containerCategories}>
-                  <Text style={styles.title}>Categories</Text>
+                  <View style={styles.containerTitle}>
+                    <Text style={styles.title}>Categories</Text>
+                    <Icon name="person-outline" style={styles.icon} size={30} onPress={() =>{navigation.navigate('Profile')}}/>
+                  </View>
                   <View >
                   <ScrollView horizontal={true}>
                     {loadingCategories != true ? categories.map((category)=>{
@@ -135,6 +139,7 @@ class HomePage extends Component {
     title:{
       fontSize: 40,
       color: 'white',
+      flex:1
     },
     containerCategories:{
       marginLeft:10,
@@ -143,6 +148,14 @@ class HomePage extends Component {
     albums:{
       flexDirection: 'row',
       flexWrap: 'wrap'
+    },
+    containerTitle:{
+      flexDirection: 'row',
+    },
+    icon:{
+      color:"grey",
+      marginRight:20,
+      marginTop:8
     }
   })
   
