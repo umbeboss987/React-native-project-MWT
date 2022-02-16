@@ -23,6 +23,11 @@ function SearchPage({loadSearchSong, searchSong}){
             </View>
           );
 
+          useEffect (()=>{
+            console.log("entrato")
+            loadSearchSong(input);
+          },[input])
+
         const renderItem = ({ item }) => (
             <Item title={item.name} />
           );
@@ -33,7 +38,7 @@ function SearchPage({loadSearchSong, searchSong}){
                     <Text style={styles.title}>Search Page</Text>
                     <View style={styles.searchContainer}>
                         <SearchBar style={styles.input}
-                          onChangeText={input => loadSearchSong(input)}
+                          onChangeText={input => setInput(input)}
                           placeholder={"Type to search"}
                           value={input}
                         ></SearchBar>
