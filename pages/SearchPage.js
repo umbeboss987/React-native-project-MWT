@@ -6,6 +6,7 @@ import {sUserPlaylist} from '../store/selectors/appSelectors';
 import { useEffect, useState} from 'react';
 import {loadSearchSong} from '../store/actions/appActions';
 import { ActivityIndicator } from "react-native-web";
+import Icon from 'react-native-vector-icons/Ionicons';
 
 
 function SearchPage({loadSearchSong, searchSong}){
@@ -14,22 +15,27 @@ function SearchPage({loadSearchSong, searchSong}){
         const songs = searchSong;
         
         const singleCategory = useSelector((state) =>{return state.appReducer.search})
-
-        
-        console.log(singleCategory)
-        const Item = ({ title }) => (
-            <View style={styles.item}>
-              <Text style={styles.titleSong}>{title}</Text>
+                
+        const Item = ({ title, type , artistName}) => (
+          <TouchableOpacity>
+            <View style={styles.renderItemContainer}>
+                <View style={styles.item}>
+                  <Text style={styles.titleSong}>{title}</Text>
+                  <Text style={styles.typeSong}>{type} * {artistName}</Text>
+                </View>
+                <View style={styles.containerIcon}>
+                  <Icon name="ellipsis-vertical-outline" style={styles.icon} size={25}/>
+                </View>
             </View>
+          </TouchableOpacity>
           );
 
           useEffect (()=>{
-            console.log("entrato")
             loadSearchSong(input);
           },[input])
 
         const renderItem = ({ item }) => (
-            <Item title={item.name} />
+            <Item title={item.name} type={item.album_type} artistName={item.artists[0].name}/>
           );
         
         return(
@@ -80,18 +86,33 @@ const styles = StyleSheet.create({
         marginTop:30
     },
     item: {
-        backgroundColor: '#f9c2ff',
-        padding: 20,
         marginVertical: 8,
-        marginHorizontal: 16,
-        width: '100%'
+        paddingTop: 15,
+        marginLeft:10,
+        width: '100%',
       },
       titleSong: {
-        fontSize: 17,
+        fontSize: 11,
+        color: 'white'
+      },
+      typeSong: {
+        fontSize: 13,
+        marginTop: 8,
+        color: 'grey',
       },
       containerSongs:{
           flex:1,
           marginTop: 40
+      },
+      icon:{
+        color: 'white',
+      },
+      renderItemContainer:{
+        flexDirection: 'row',
+      },
+      containerIcon:{
+        marginLeft: 'auto',
+        justifyContent: 'center',
       }
 })
 
