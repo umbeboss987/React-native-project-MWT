@@ -1,5 +1,4 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity , Image, ScrollView, FlatList,SectionList,SafeAreaView, ActivityIndicator} from 'react-native';
+import { StyleSheet, Text, View,ScrollView,SafeAreaView, ActivityIndicator} from 'react-native';
 import {sProva, sCategories,sNewPlaylist, sNewReleases, sLoadingCategories, sLoadingNewRelease, sLoadingNewPlaylist} from '../store/selectors/appSelectors';
 import {loadCategories, getUsers, loadNewPlaylist, loadNewReleases} from '../store/actions/appActions';
 import Icon from 'react-native-vector-icons/Ionicons';

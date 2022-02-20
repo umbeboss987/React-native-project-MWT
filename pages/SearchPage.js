@@ -1,45 +1,61 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, SafeAreaView, TextInput, Item, FlatList} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView,FlatList, ActivityIndicator} from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { connect , useSelector} from "react-redux";
 import {sUserPlaylist} from '../store/selectors/appSelectors';
 import { useEffect, useState} from 'react';
 import {loadSearchSong} from '../store/actions/appActions';
-import { ActivityIndicator } from "react-native-web";
 import Icon from 'react-native-vector-icons/Ionicons';
+import PickerModal from '../components/PickerModal';
+
 
 
 function SearchPage({loadSearchSong, searchSong}){
 
-        const [input, setInput] = useState("")
+        const [input, setInput] = useState("");
+        const [showModal, setShowModal] = useState(false);
+        const [item, setItem] = useState();
+        const [id, setId] = useState();
+
+
         const songs = searchSong;
         
         const singleCategory = useSelector((state) =>{return state.appReducer.search})
+
+        const items = [
+         'Save in my Music',
+         'Save in my Music'
+        ];
+
+        useEffect (()=>{
+          loadSearchSong(input);
+        },[input])
+
                 
-        const Item = ({ title, type , artistName}) => (
-          <TouchableOpacity>
+        const Item = ({ title, type , artistName, id}) => (
             <View style={styles.renderItemContainer}>
-                <View style={styles.item}>
+              <TouchableOpacity style={styles.item}>
+                <View >
                   <Text style={styles.titleSong}>{title}</Text>
                   <Text style={styles.typeSong}>{type} * {artistName}</Text>
                 </View>
-                <View style={styles.containerIcon}>
-                  <Icon name="ellipsis-vertical-outline" style={styles.icon} size={25}/>
-                </View>
+              </TouchableOpacity>
+                <TouchableOpacity style={styles.containerIcon} onPress={() =>{setId(id),setItem(type),setShowModal(true)}}>
+                  <View >
+                    <Icon name="ellipsis-vertical-outline" style={styles.icon}  size={25}/>
+                  </View>
+                </TouchableOpacity>
             </View>
-          </TouchableOpacity>
           );
 
-          useEffect (()=>{
-            loadSearchSong(input);
-          },[input])
-
         const renderItem = ({ item }) => (
-            <Item title={item.name} type={item.album_type} artistName={item.artists[0].name}/>
+          <View>
+            <Item id={item.id} title={item.name} type={item.album_type} artistName={item.artists[0].name}/>
+          </View>
           );
         
         return(
-            <SafeAreaView style={styles.container}>
+            <SafeAreaView style={styles.container}>      
                 <View >
                     <Text style={styles.title}>Search Page</Text>
                     <View style={styles.searchContainer}>
@@ -59,6 +75,7 @@ function SearchPage({loadSearchSong, searchSong}){
                     />
                 : <ActivityIndicator/>}
                 </View>
+                <PickerModal visible={showModal} items={items} onClose={() =>{setShowModal(false)}} type={item} id={id}/>
             </SafeAreaView>
         )
 
@@ -90,9 +107,10 @@ const styles = StyleSheet.create({
         paddingTop: 15,
         marginLeft:10,
         width: '100%',
+        flexWrap:'wrap',
       },
       titleSong: {
-        fontSize: 11,
+        fontSize: 16,
         color: 'white'
       },
       typeSong: {
@@ -113,7 +131,7 @@ const styles = StyleSheet.create({
       containerIcon:{
         marginLeft: 'auto',
         justifyContent: 'center',
-      }
+      },
 })
 
 
