@@ -7,6 +7,11 @@ export default function (state = USER_STATE, action) {
                 ...state,
                 playlists: action.payload
             }
+         case 'SAVE_TRACK_SUCCESS':          
+            return {
+            ...state,
+            playlists: [...state.playlists,action.payload]
+        };
         default:
             return state
     }

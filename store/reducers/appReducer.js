@@ -65,6 +65,7 @@ export default function (state = INITIAL_STATE, action) {
             ...state,
             search: albums
         };
+     
         default:
             return state
     }

@@ -10,4 +10,5 @@ export const INITIAL_STATE = {
     loadingNewReleases:false,
     loadingSingleCategory:true,
     loadingNewPlaylist:false,
+    response: ""
 }

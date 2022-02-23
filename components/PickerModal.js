@@ -3,19 +3,22 @@ import  Icon  from 'react-native-elements/dist/icons/Icon';
 import { useEffect, useState} from 'react';
 import { connect , useSelector} from "react-redux";
 import {Picker} from '@react-native-picker/picker';
+import {saveTrack} from '../store/actions/appActions';
 
 
-function PickerModal ({visible, onClose, items, type, id}) {
+function PickerModal ({visible, onClose, items, item ,saveTrack}) {
 
             const [value, setValueState] = useState("stringa")
-            console.log(type);
-            console.log(id);
-            console.log(items[0].value)
             useEffect(() =>{
                 if(value){
                     setValueState(value)
                 }
             },[value])
+
+            const save_track_album = ()=>{
+                    saveTrack(item);
+                
+            }
     return(
         <Modal animated transparent visible={visible} animationType="slide">
             <View style={styles.modalContainer}>
@@ -24,8 +27,8 @@ function PickerModal ({visible, onClose, items, type, id}) {
                         <TouchableOpacity onPress={onClose}>
                             <Icon name="close" color="purple" size={30}/>
                         </TouchableOpacity>
-                        <TouchableOpacity>
-                            <Icon name="check" color="purple" size={30}/>
+                        <TouchableOpacity onPress={save_track_album}>
+                            <Icon name="check"  color="purple" size={30}/>
                         </TouchableOpacity>
                     </View>
                     <Picker
@@ -77,8 +80,8 @@ function mapStateToProps(state) {
   
   function mapDispatchToProps(dispatch) {
     return {
-        loadSearchSong: function(input){
-            dispatch(loadSearchSong(input))
+        saveTrack: function(id){
+            dispatch(saveTrack(id))
         }
     };
   }

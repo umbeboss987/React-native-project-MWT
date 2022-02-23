@@ -12,7 +12,11 @@ import { LOAD_CATEGORIES_SUCCESS,
         LOAD_SINGLE_CATEGORIES_SUCCESS,
         LOAD_NEW_PLAYLIST_SUCCESS, 
         LOAD_NEW_RELEASES_SUCCESS, 
-        LOAD_USER_PLAYLIST_ERROR} 
+        LOAD_USER_PLAYLIST_ERROR,
+        SAVE_TRACK,
+        SAVE_TRACK_SUCCESS,
+        SAVE_TRACK_ERROR
+    } 
 from './ActionTypes'
 import axios from 'axios';
 import axiosInstance from '../../interceptor/index';
@@ -134,6 +138,27 @@ export const loadSearchSong = (input) => async dispatch => {
     catch(e){
         dispatch( {
             type: LOAD_SEARCH_ERROR,
+            payload: console.log(e),
+        })
+    }
+
+}
+
+export const saveTrack = (item) => async dispatch => {
+    console.log(item);
+    dispatch({
+        type: SAVE_TRACK,
+    })
+    
+    try{
+        dispatch({
+            type: SAVE_TRACK_SUCCESS,
+            payload: item
+        })
+    }
+    catch(e){
+        dispatch( {
+            type: SAVE_TRACK_ERROR,
             payload: console.log(e),
         })
     }

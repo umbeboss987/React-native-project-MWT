@@ -9,9 +9,9 @@ import {loadUserPlaylist} from '../store/actions/appActions';
 function UserPlaylistPage ({loadUserPlaylist, userPlaylist}){
 
 
-    useEffect (()=>{
-        loadUserPlaylist()
-    },[loadUserPlaylist])
+    //useEffect (()=>{
+    //    loadUserPlaylist()
+  //  },[loadUserPlaylist])
 
     return(
         
@@ -21,7 +21,7 @@ function UserPlaylistPage ({loadUserPlaylist, userPlaylist}){
                         <Text style={styles.title}>Music</Text>
                     </View>
                     <ScrollView>
-                    {userPlaylist.items?.map(playlist =>{
+                    {userPlaylist?.map(playlist =>{
                     return(    
                     <TouchableOpacity key={playlist.id}>
                         <View style={styles.containerSongs}>
