@@ -1,25 +1,36 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity , Image, ScrollView, FlatList,SectionList,SafeAreaView, ActivityIndicator} from 'react-native';
-import {sProva, sCategories} from '../store/selectors/appSelectors';
-import {loadCategories, getUsers, loadNewPlaylist, loadNewReleases} from '../store/actions/appActions';
-import {connect} from 'react-redux';
-import React, {Component} from 'react';
+import { StyleSheet, Text, View, TouchableOpacity , Image,SafeAreaView, ActivityIndicator} from 'react-native';
+import {sLoadUserProfile, sLoadingData} from '../store/selectors/appSelectors';
+import {userProfile} from '../store/actions/appActions';
+import { connect, useDispatch, useSelector } from "react-redux";
+import React from 'react';
+import { useEffect } from 'react';
 
 
-function UserProfilePage(){
+
+function UserProfilePage({userProfile, loadingData}){
+
+    useEffect (() =>{
+       userProfile();
+    },[])
+
+
+    const sUserProfile = useSelector((state) =>{return state.userReducer.data})
 
     return(
         <SafeAreaView style={styles.container}>
             <View >
                 <View style={styles.imageContainer}>
-                <Image source={{ uri:'https://anghamiwebcdn.akamaized.net/web/assets/img/landing/ManWeb_landing.png'}} style={styles.image}>
-                    </Image>
+                {loadingData == true ?  <Image source={{uri: sUserProfile?.data?.images[0].url}} style={styles.image}>
+                    </Image> : <ActivityIndicator/>}
+               
                 </View>
+               
                 <View style={styles.dates}>
+                    <Text style={styles.title}></Text>
                     <Text style={styles.title}>prova</Text>
                     <Text style={styles.title}>prova</Text>
-                    <Text style={styles.title}>prova</Text>
-                </View>
+                </View>            
             </View>
         </SafeAreaView>
 
@@ -58,11 +69,16 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
     return {
+        sUserProfile : sLoadUserProfile(state),
+        loadingData: sLoadingData(state)
     };
   }
   
   function mapDispatchToProps(dispatch) {
     return {
+        userProfile : function() {
+            dispatch(userProfile())
+        }
       
     };
   }

@@ -15,3 +15,6 @@ export const sNewPlaylist = (state) => state.appReducer.newPlaylist;
 export const sUserPlaylist = (state) => state.userReducer.playlists;
 
 export const sLoadSearch = (state) => state.appReducer.search;
+
+export const sLoadUserProfile = (state) => state.userReducer.data;
+export const sLoadingData = (state) => state.userReducer.loadingData;

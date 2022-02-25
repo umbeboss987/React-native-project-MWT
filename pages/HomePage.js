@@ -18,8 +18,6 @@ class HomePage extends Component {
     this.props.loadNewReleases();
     this.props.loadNewPlaylist();
   }
-
-  
     render() {
       const {categories} = this.props; 
       const {newReleases} = this.props;
@@ -30,6 +28,7 @@ class HomePage extends Component {
       const {loadingNewPlaylist} = this.props;
 
 
+     
       return(
       <View style={styles.container} >
         <SafeAreaView>

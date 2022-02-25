@@ -1,4 +1,5 @@
 export const USER_STATE ={
-    playlists:[]
-
+    playlists:[],
+    data:[],
+    loadingData: false
 }

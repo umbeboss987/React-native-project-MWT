@@ -12,6 +12,18 @@ export default function (state = USER_STATE, action) {
             ...state,
             playlists: [...state.playlists,action.payload]
         };
+        case 'GET_USER_PROFILE':          
+            return {
+            ...state,
+            loadingData: true,
+            data: action.payload
+        };
+        case 'GET_USER_PROFILE_SUCCESS':          
+            return {
+            ...state,
+            loadingData: true,
+            data: action.payload
+        };
         default:
             return state
     }

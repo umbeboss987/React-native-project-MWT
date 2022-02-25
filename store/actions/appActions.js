@@ -15,7 +15,10 @@ import { LOAD_CATEGORIES_SUCCESS,
         LOAD_USER_PLAYLIST_ERROR,
         SAVE_TRACK,
         SAVE_TRACK_SUCCESS,
-        SAVE_TRACK_ERROR
+        SAVE_TRACK_ERROR,
+        GET_USER_PROFILE,
+        GET_USER_PROFILE_SUCCESS,
+        GET_USER_PROFILE_ERROR
     } 
 from './ActionTypes'
 import axios from 'axios';
@@ -145,7 +148,6 @@ export const loadSearchSong = (input) => async dispatch => {
 }
 
 export const saveTrack = (item) => async dispatch => {
-    console.log(item);
     dispatch({
         type: SAVE_TRACK,
     })
@@ -159,6 +161,27 @@ export const saveTrack = (item) => async dispatch => {
     catch(e){
         dispatch( {
             type: SAVE_TRACK_ERROR,
+            payload: console.log(e),
+        })
+    }
+
+}
+
+export const userProfile = () => async dispatch => {
+    dispatch({
+        type: GET_USER_PROFILE,
+    })
+    
+    try{
+        const res = await axiosInstance.get(`me`);
+        dispatch({
+            type: GET_USER_PROFILE_SUCCESS,
+            payload: res
+        })
+    }
+    catch(e){
+        dispatch( {
+            type: GET_USER_PROFILE_ERROR,
             payload: console.log(e),
         })
     }
