@@ -1,20 +1,27 @@
-import { StyleSheet,View, Modal, TouchableOpacity} from 'react-native';
+import { StyleSheet,View, Modal, TouchableOpacity, Alert} from 'react-native';
 import { Picker } from "@react-native-picker/picker";
 import { Icon } from 'react-native-elements/dist/icons/Icon';
 import { useEffect, useState} from 'react';
 import { connect , useSelector} from "react-redux";
+import {deleteSong} from '../store/actions/appActions';
 
-function  ModalPicker ({visible, onClose, items, type, id}){
+function  ModalPicker ({visible, onClose, items, item, delete_song}){
 
             const [value, setValueState] = useState(" ")
-            console.log(type);
-            console.log(id);
 
             useEffect(() =>{
                 if(value){
                     setValueState(value)
                 }
             },[value])
+
+            const deleteSong = () =>{
+                delete_song(item);
+                onClose();
+                Alert.alert("Deleted item","",[
+                    {text : 'Ok', onPress: ()=>{console.log('alert Closed')}}
+                ]);
+            }
     return(
         <Modal animated transparent visible={visible} animationType="slide">
             <View style={styles.modalContainer}>
@@ -24,7 +31,7 @@ function  ModalPicker ({visible, onClose, items, type, id}){
                             <Icon name="close" color="purple" size={30}/>
                         </TouchableOpacity>
                         <TouchableOpacity>
-                            <Icon name="check" color="purple" size={30}/>
+                            <Icon name="check" onPress={deleteSong} color="purple" size={30}/>
                         </TouchableOpacity>
                     </View>
                     <Picker
@@ -33,10 +40,8 @@ function  ModalPicker ({visible, onClose, items, type, id}){
                         style={styles.itemPicker}
                     >
                         { items != undefined ? items.map(item =>
-                        <Picker.item value={item.value} key={item.id} label={item.value} style={{color: 'white'}}
-
-                        />
-                        ):   <Picker.item />}
+                        <Picker.Item value={item}  label={item} style={{color: 'white'}}/>
+                        ):  <Picker.Item />}
                     </Picker>
                 </View>
             </View>
@@ -79,6 +84,9 @@ function mapStateToProps(state) {
     return {
         loadSearchSong: function(input){
             dispatch(loadSearchSong(input))
+        },
+        delete_song: function(input){
+            dispatch(deleteSong(input))
         }
     };
   }

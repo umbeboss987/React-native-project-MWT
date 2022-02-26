@@ -1,4 +1,4 @@
-import { StyleSheet,View, Modal, TouchableOpacity} from 'react-native';
+import { StyleSheet,View, Modal, TouchableOpacity, Alert} from 'react-native';
 import  Icon  from 'react-native-elements/dist/icons/Icon';
 import { useEffect, useState} from 'react';
 import { connect , useSelector} from "react-redux";
@@ -17,7 +17,10 @@ function PickerModal ({visible, onClose, items, item ,saveTrack}) {
 
             const save_track_album = ()=>{
                     saveTrack(item);
-                
+                    onClose();
+                    Alert.alert("Added to your library","",[
+                        {text : 'Ok', onPress: ()=>{console.log('alert Closed')}}
+                    ]);
             }
     return(
         <Modal animated transparent visible={visible} animationType="slide">

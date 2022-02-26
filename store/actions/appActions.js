@@ -18,7 +18,10 @@ import { LOAD_CATEGORIES_SUCCESS,
         SAVE_TRACK_ERROR,
         GET_USER_PROFILE,
         GET_USER_PROFILE_SUCCESS,
-        GET_USER_PROFILE_ERROR
+        GET_USER_PROFILE_ERROR,
+        DELETE_SONG,
+        DELETE_SONG_SUCCESS,
+        DELETE_SONG_ERORR
     } 
 from './ActionTypes'
 import axios from 'axios';
@@ -182,6 +185,26 @@ export const userProfile = () => async dispatch => {
     catch(e){
         dispatch( {
             type: GET_USER_PROFILE_ERROR,
+            payload: console.log(e),
+        })
+    }
+
+}
+
+export const deleteSong = (item) => async dispatch => {
+    dispatch({
+        type: DELETE_SONG,
+    })
+    
+    try{
+        dispatch({
+            type: DELETE_SONG_SUCCESS,
+            payload: item
+        })
+    }
+    catch(e){
+        dispatch( {
+            type: DELETE_SONG_ERORR,
             payload: console.log(e),
         })
     }

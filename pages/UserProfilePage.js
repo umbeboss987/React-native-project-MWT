@@ -27,10 +27,13 @@ function UserProfilePage({userProfile, loadingData}){
                 </View>
                
                 <View style={styles.dates}>
-                    <Text style={styles.title}></Text>
-                    <Text style={styles.title}>prova</Text>
-                    <Text style={styles.title}>prova</Text>
-                </View>            
+                    <Text style={styles.title}>Follower</Text>
+                    <Text style={styles.title}>Country</Text>
+                </View>  
+                <View style={styles.containerData}>
+                    <Text style={styles.data}>{sUserProfile?.data?.followers.total}</Text>
+                    <Text style={styles.data}>{sUserProfile?.data?.country}</Text>
+                </View>               
             </View>
         </SafeAreaView>
 
@@ -58,11 +61,24 @@ const styles = StyleSheet.create({
     },
     dates:{
         flexDirection: 'row',
+        marginTop:20,
+        justifyContent: 'space-around',
     },
     title: {
-        fontSize:25,
-        padding:40,
+        fontSize:20,
         color: 'white'
+    },
+    containerData:{
+        flexDirection: 'row',
+        marginTop:15,
+        marginLeft:35,
+        justifyContent: 'space-around',
+
+    },
+    data:{
+        width:'30%',
+        color: 'white',
+        fontSize:15,
     }
 })
 

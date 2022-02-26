@@ -24,6 +24,14 @@ export default function (state = USER_STATE, action) {
             loadingData: true,
             data: action.payload
         };
+        case 'DELETE_SONG_SUCCESS':        
+       const newState = state.playlists.filter((item)=>{
+            return item.id != action.payload.id
+        })  
+        return {
+        ...state,
+        playlists: newState
+    };
         default:
             return state
     }

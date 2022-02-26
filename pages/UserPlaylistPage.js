@@ -1,19 +1,23 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity , Image, ScrollView, SafeAreaView} from 'react-native';
 import { connect } from "react-redux";
-import { useEffect } from 'react';
+import { useEffect ,useState} from 'react';
 import {sUserPlaylist} from '../store/selectors/appSelectors';
 import {loadUserPlaylist} from '../store/actions/appActions';
 import Icon from 'react-native-vector-icons/Ionicons';
+import ModalPicker from '../components/ModalPicker';
 
 
 
 function UserPlaylistPage ({loadUserPlaylist, userPlaylist}){
 
+  const [showModal, setShowModal] = useState(false);
+  const [item, setItem] = useState();
 
     //useEffect (()=>{
       //  loadUserPlaylist()
     //},[loadUserPlaylist])
+    const items = ['Delete'];
 
     return(
         
@@ -23,7 +27,7 @@ function UserPlaylistPage ({loadUserPlaylist, userPlaylist}){
                         <Text style={styles.title}>Music</Text>
                     </View>
                     <ScrollView>
-                    {userPlaylist?.map(playlist =>{
+                    {userPlaylist.length > 0 ? userPlaylist?.map(playlist =>{
                     return(    
                     <View style={styles.renderItemContainer}>
                         <TouchableOpacity key={playlist.id} style={styles.item}>
@@ -32,14 +36,15 @@ function UserPlaylistPage ({loadUserPlaylist, userPlaylist}){
                                 <Text style={styles.typeSong}>{playlist.album_type} * {playlist.artists[0].name}</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.containerIcon}>
+                        <TouchableOpacity style={styles.containerIcon} onPress={() =>{setShowModal(true), setItem(playlist)}}>
                             <View >
                             <Icon name="ellipsis-vertical-outline" style={styles.icon}  size={25}/>
                             </View>
                         </TouchableOpacity>
                    </View>
-                    )})}
+                    )}) : <View></View>}
                 </ScrollView>
+                  <ModalPicker visible={showModal} onClose={() =>{setShowModal(false)}} items={items} item={item}/>
                 </SafeAreaView>
             </View>
     )
@@ -120,6 +125,6 @@ function mapStateToProps(state) {
   }
   
   export default connect(
-    mapDispatchToProps,
     mapStateToProps,
+    mapDispatchToProps,
   )(UserPlaylistPage);
