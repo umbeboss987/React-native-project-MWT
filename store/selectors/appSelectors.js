@@ -18,3 +18,5 @@ export const sLoadSearch = (state) => state.appReducer.search;
 
 export const sLoadUserProfile = (state) => state.userReducer.data;
 export const sLoadingData = (state) => state.userReducer.loadingData;
+
+export const sUserLibrary = (state) => state.userReducer.library;

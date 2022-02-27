@@ -10,7 +10,7 @@ import PickerModal from '../components/PickerModal';
 
 
 
-function SearchPage({loadSearchSong, searchSong}){
+function SearchPage({loadSearchSong, searchSong, navigation}){
 
         const [input, setInput] = useState("");
         const [showModal, setShowModal] = useState(false);
@@ -33,7 +33,7 @@ function SearchPage({loadSearchSong, searchSong}){
                 
         const Item = ({ title,artistName, item, type}) => (
             <View style={styles.renderItemContainer}>
-              <TouchableOpacity style={styles.item}>
+              <TouchableOpacity style={styles.item} onPress={()=>{navigation.navigate('SongPlayerPage', item)}}>
                 <View >
                   <Text style={styles.titleSong}>{title}</Text>
                   <Text style={styles.typeSong}>{type} * {artistName}</Text>

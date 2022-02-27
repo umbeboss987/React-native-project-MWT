@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity , Image, ScrollView, SafeAreaView} from 'react-native';
 import { connect } from "react-redux";
 import { useEffect ,useState} from 'react';
-import {sUserPlaylist} from '../store/selectors/appSelectors';
+import {sUserLibrary} from '../store/selectors/appSelectors';
 import {loadUserPlaylist} from '../store/actions/appActions';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ModalPicker from '../components/ModalPicker';
@@ -27,9 +27,9 @@ function UserPlaylistPage ({loadUserPlaylist, userPlaylist}){
                         <Text style={styles.title}>Music</Text>
                     </View>
                     <ScrollView>
-                    {userPlaylist.length > 0 ? userPlaylist?.map(playlist =>{
+                    {userPlaylist.length > 0 ? userPlaylist?.map((playlist, i) =>{
                     return(    
-                    <View style={styles.renderItemContainer}>
+                    <View style={styles.renderItemContainer} key={i}>
                         <TouchableOpacity key={playlist.id} style={styles.item}>
                             <View>                           
                                 <Text style={styles.titleSong}>{playlist.name}</Text>
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
     return {
-       userPlaylist : sUserPlaylist(state)
+       userPlaylist : sUserLibrary(state)
     };
   }
   

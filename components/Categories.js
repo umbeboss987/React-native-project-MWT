@@ -3,9 +3,9 @@ import { StyleSheet, Text, View, TouchableOpacity , Image, ScrollView} from 'rea
 import { useNavigation } from '@react-navigation/native';
 
 
-const Categories = ({ title, images, onPress }) => {
+const Categories = ({ title, images, onPress,}) => {
   return (
-      <View>
+      <View style={styles.container}>
           <TouchableOpacity {...{onPress}}>
             <View style={styles.categories} >
                     <Image source={{ uri:images}} style={styles.imageBackground}>
@@ -18,7 +18,10 @@ const Categories = ({ title, images, onPress }) => {
 };
 
 const styles = StyleSheet.create({
-
+  container: {
+    justifyContent: 'center',
+    marginTop:10,
+  },
   imageBackground: {
     height: 170,
     width: 195,
@@ -34,7 +37,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   text: {
-      fontSize: 20,
+      marginTop:10,
+      fontSize: 10,
       color: 'white',
   },
  

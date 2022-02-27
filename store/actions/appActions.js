@@ -21,7 +21,10 @@ import { LOAD_CATEGORIES_SUCCESS,
         GET_USER_PROFILE_ERROR,
         DELETE_SONG,
         DELETE_SONG_SUCCESS,
-        DELETE_SONG_ERORR
+        DELETE_SONG_ERORR,
+        GET_SINGLE_PLAYLIST_SUCCESS,
+        GET_SINGLE_PLAYLIST_ERROR,
+        GET_SINGLE_PLAYLIST
     } 
 from './ActionTypes'
 import axios from 'axios';
@@ -205,6 +208,27 @@ export const deleteSong = (item) => async dispatch => {
     catch(e){
         dispatch( {
             type: DELETE_SONG_ERORR,
+            payload: console.log(e),
+        })
+    }
+
+}
+
+export const getSinglePlaylist = (id) => async dispatch => {
+    dispatch({
+        type: GET_SINGLE_PLAYLIST,
+    })
+    
+    try{
+        const res = await axiosInstance.get(`playlists/${id}/tracks`);
+        dispatch({
+            type: GET_SINGLE_PLAYLIST_SUCCESS,
+            payload: res
+        })
+    }
+    catch(e){
+        dispatch( {
+            type: GET_SINGLE_PLAYLIST_ERROR,
             payload: console.log(e),
         })
     }

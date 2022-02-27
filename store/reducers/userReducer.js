@@ -10,7 +10,7 @@ export default function (state = USER_STATE, action) {
          case 'SAVE_TRACK_SUCCESS':          
             return {
             ...state,
-            playlists: [...state.playlists,action.payload]
+            library: [...state.library,action.payload]
         };
         case 'GET_USER_PROFILE':          
             return {
@@ -30,8 +30,13 @@ export default function (state = USER_STATE, action) {
         })  
         return {
         ...state,
-        playlists: newState
+        library: newState
     };
+        case 'GET_SINGLE_PLAYLIST_SUCCESS':          
+        return {
+        ...state,
+        playlists: action.payload
+        };
         default:
             return state
     }

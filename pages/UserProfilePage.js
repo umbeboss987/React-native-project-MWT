@@ -1,18 +1,37 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity , Image,SafeAreaView, ActivityIndicator} from 'react-native';
-import {sLoadUserProfile, sLoadingData} from '../store/selectors/appSelectors';
-import {userProfile} from '../store/actions/appActions';
+import { StyleSheet, Text, View, TouchableOpacity , Image,SafeAreaView, ActivityIndicator, FlatList} from 'react-native';
+import {sLoadUserProfile, sLoadingData, sUserPlaylist} from '../store/selectors/appSelectors';
+import {userProfile, loadUserPlaylist} from '../store/actions/appActions';
 import { connect, useDispatch, useSelector } from "react-redux";
 import React from 'react';
 import { useEffect } from 'react';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 
 
-function UserProfilePage({userProfile, loadingData}){
+function UserProfilePage({userProfile, loadingData, loadUserPlaylist, userPlaylist, navigation}){
 
     useEffect (() =>{
        userProfile();
+       loadUserPlaylist();
     },[])
+
+    const Item = ({title, item}) => (
+        <View>
+          <TouchableOpacity style={styles.item} onPress={() =>{navigation.navigate("PlaylistSongsPage", item)}}>
+            <View >
+              <Text style={styles.titleSong}>{title}</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      );
+
+    const renderItem = ({ item }) => (
+      <View>
+        <Item title={item.name} item={item}/>
+      </View>
+      );
+    
 
 
     const sUserProfile = useSelector((state) =>{return state.userReducer.data})
@@ -33,8 +52,19 @@ function UserProfilePage({userProfile, loadingData}){
                 <View style={styles.containerData}>
                     <Text style={styles.data}>{sUserProfile?.data?.followers.total}</Text>
                     <Text style={styles.data}>{sUserProfile?.data?.country}</Text>
-                </View>               
+                </View>   
+                        
             </View>
+            <View style={styles.containerPlaylists}>
+                    <Text style={styles.titlePlaylist}>My Playlists</Text>    
+                <View>
+               <FlatList
+                 data={userPlaylist.items}
+                 renderItem={renderItem}
+                 keyExtractor={item => item.id}
+               />
+                </View>
+            </View>    
         </SafeAreaView>
 
     )
@@ -77,16 +107,53 @@ const styles = StyleSheet.create({
     },
     data:{
         width:'30%',
-        color: 'white',
+        color: 'grey',
         fontSize:15,
-    }
+    },
+    titlePlaylist:{
+        color:'white',
+        fontSize:23,
+    },
+    containerPlaylists:{
+        width:'100%',
+        flexDirection: 'column',
+        marginTop:50,
+        marginLeft:30,
+    },
+    renderItemContainer:{
+        flexDirection: 'row',
+      },
+    item: {
+        marginVertical: 8,
+        paddingTop: 15,
+        marginLeft:10,
+        width: '100%',
+        flexWrap:'wrap',
+    },
+    titleSong: {
+        fontSize: 20,
+        color: 'grey'
+      },
+      typeSong: {
+        fontSize: 13,
+        marginTop: 8,
+        color: 'grey',
+      },
+      item: {
+        marginVertical: 8,
+        paddingTop: 15,
+        marginLeft:10,
+        width: '100%',
+        flexWrap:'wrap',
+      },
 })
 
 
 function mapStateToProps(state) {
     return {
         sUserProfile : sLoadUserProfile(state),
-        loadingData: sLoadingData(state)
+        loadingData: sLoadingData(state),
+        userPlaylist : sUserPlaylist(state)
     };
   }
   
@@ -94,6 +161,9 @@ function mapStateToProps(state) {
     return {
         userProfile : function() {
             dispatch(userProfile())
+        },
+        loadUserPlaylist: function() {
+            dispatch(loadUserPlaylist())
         }
       
     };

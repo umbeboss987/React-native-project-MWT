@@ -10,6 +10,8 @@ import LoginPage from '../pages/LoginPage';
 import AlbumPage from '../pages/AlbumPage';
 import UserPlaylistPage from '../pages/UserPlaylistPage';
 import UserProfilePage from '../pages/UserProfilePage';
+import SongPlayerPage from '../pages/SongPlayerPage';
+import PlaylistSongsPage from '../pages/PlaylistSongsPage';
 
 
 
@@ -34,7 +36,9 @@ export default function RootNavigator (){
                     <RootStack.Screen options={{ headerShown: false }} name="Tab" component={Tabs} />
                 </React.Fragment> 
                 <RootStack.Screen name="Album" component={AlbumPage} /> 
-                <RootStack.Screen name="Profile" component={UserProfilePage}  />                       
+                <RootStack.Screen name="Profile" component={UserProfilePage}  />  
+                <RootStack.Screen name="SongPlayerPage" component={SongPlayerPage}  />  
+                <RootStack.Screen name="PlaylistSongsPage" component={PlaylistSongsPage}  />                                                                                      
             </RootStack.Navigator>            
         </NavigationContainer>
     )

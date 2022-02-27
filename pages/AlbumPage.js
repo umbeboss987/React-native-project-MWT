@@ -43,9 +43,9 @@ function AlbumPage ({loadingSingleCategory, route,loadSingleCategory}){
         <LinearGradient start={{x:0.001, y:0.1}} colors={['#010916','#010916','#010916','#010916','#010916']}>
             <View style={styles.secondContainer}>
                 <ScrollView>
-                    {singleCategory.tracks.items.map(track =>{
+                    {singleCategory.tracks.items.map((track,i) =>{
                     return(    
-                    <TouchableOpacity>
+                    <TouchableOpacity key={i}>
                         <View style={styles.containerSongs}>
                             <Text style={styles.songName}>{track.track.name}</Text>
                             <Text style={styles.artistName}>{track.track.artists[0].name}</Text>

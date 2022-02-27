@@ -40,9 +40,12 @@ class HomePage extends Component {
                   </View>
                   <View >
                   <ScrollView horizontal={true}>
-                    {loadingCategories != true ? categories.map((category)=>{
+                    {loadingCategories != true ? categories.map((category ,i)=>{
                       return(
-                          <Categories onPress={()=>{navigation.navigate('Album', category)}} title={category.name} key={category.id} images={category.images[0].url} />
+                        <View key={i} style={styles.subContainer}>
+                          <Categories onPress={()=>{navigation.navigate('Album', category)}} title={category.name}  images={category.images[0].url} />
+                          <Text style={styles.textSong}>{category.name}</Text>
+                         </View>
                         )
                       }) : <ActivityIndicator size="large"/>} 
                   </ScrollView>
@@ -53,9 +56,12 @@ class HomePage extends Component {
                   <View >
                   <ScrollView horizontal={true}>
 
-                    {!loadingNewPlaylist ? playlists?.items.map((item)=>{
+                    {!loadingNewPlaylist ? playlists?.items.map((item, i)=>{
                       return(
-                          <Categories onPress={()=>{navigation.navigate('Album', item)}} title={item.name} key={item.id} images={item.images[0].url}/>
+                        <View key={i} style={styles.subContainer}>
+                          <Categories onPress={()=>{navigation.navigate('Album', item)}} title={item.name} key={i} images={item.images[0].url}/>
+                          <Text style={styles.textSong}>{item.name}</Text>
+                        </View>
                         )
                       }) : <ActivityIndicator size="large"/>} 
                   </ScrollView>
@@ -69,10 +75,11 @@ class HomePage extends Component {
                   flexDirection: 'row',
                   flexWrap: 'wrap'}}
                 >
-                  {!loadingNewReleases ? newReleases.items?.map((album)=>{
+                  {!loadingNewReleases ? newReleases.items?.map((album, i)=>{
                     return(
-                      <View>
-                        <Categories title={album.name} key={album.id} images={album.images[0].url} />
+                      <View key={i}  style={styles.subContainer}>
+                        <Categories title={album.name} images={album.images[0].url} />
+                        <Text style={styles.textSong}>{album.name}</Text>
                       </View>
                         )
                       }) : <ActivityIndicator size="large"/>}
@@ -154,6 +161,14 @@ class HomePage extends Component {
       color:"grey",
       marginRight:20,
       marginTop:8
+    },
+    textSong:{
+      color:"grey",
+      fontSize:15
+    },
+    subContainer:{
+      justifyContent: 'center',
+      alignItems: 'center',
     }
   })
   
