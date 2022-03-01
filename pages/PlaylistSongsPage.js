@@ -1,6 +1,6 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity , Image, ScrollView, SafeAreaView} from 'react-native';
-import { connect } from "react-redux";
+import { StyleSheet, Text, View, TouchableOpacity , Image, ScrollView, SafeAreaView, FlatList} from 'react-native';
+import { connect, useSelector } from "react-redux";
 import { useEffect ,useState} from 'react';
 import {sUserLibrary} from '../store/selectors/appSelectors';
 import {getSinglePlaylist} from '../store/actions/appActions';
@@ -10,38 +10,45 @@ import ModalPicker from '../components/ModalPicker';
 
 function PlaylistSongsPage ({route, getSinglePlaylist}){
 
+  const {id} = route.params;
 
     useEffect (() =>{
-        const {id} = route.params;
-        console.log(id)
         getSinglePlaylist(id);
     },[])
 
+
+
     const [showModal, setShowModal] = useState(false);
 
+    const Item = ({title, item}) => (
+      <View>
+        <TouchableOpacity style={styles.item}>
+          <View >
+            <Text style={styles.titleSong}>{title}</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    );
+
+  const renderItem = ({ item }) => (
+    <View>
+      <Item title={item.track.name} item={item}/>
+    </View>
+    );
+
+    const sUserProfile = useSelector((state) =>{return state.userReducer.playlists.data?.items})
 
       return(  
         <View style={styles.container}>
             <SafeAreaView>
                 <View styles={styles.secondContainer}>
-                    <Text style={styles.title}>Music</Text>
+                    <Text style={styles.title}>My Playlist</Text>
                 </View>
-                <ScrollView>
-                
-                <View style={styles.renderItemContainer}>
-                    <TouchableOpacity  style={styles.item}>
-                        <View>                           
-                            <Text style={styles.titleSong}>Test</Text>
-                            <Text style={styles.typeSong}>Test</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.containerIcon} onPress={() =>{setShowModal(true), setItem(playlist)}}>
-                        <View >
-                        <Icon name="ellipsis-vertical-outline" style={styles.icon}  size={25}/>
-                        </View>
-                    </TouchableOpacity>
-               </View>
-            </ScrollView>
+                <FlatList
+                 data={sUserProfile}
+                 renderItem={renderItem}
+                 keyExtractor={item => item.track.id}
+               />
               <ModalPicker visible={showModal} onClose={() =>{setShowModal(false)}} />
             </SafeAreaView>
         </View>
@@ -104,6 +111,13 @@ titleSong: {
   renderItemContainer:{
     flexDirection: 'row',
   },
+  item: {
+    marginVertical: 8,
+    paddingTop: 15,
+    marginLeft:10,
+    width: '100%',
+    flexWrap:'wrap',
+},
 })
 
 

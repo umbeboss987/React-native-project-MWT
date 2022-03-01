@@ -25,7 +25,7 @@ export default function (state = USER_STATE, action) {
             data: action.payload
         };
         case 'DELETE_SONG_SUCCESS':        
-       const newState = state.playlists.filter((item)=>{
+       const newState = state.library.filter((item)=>{
             return item.id != action.payload.id
         })  
         return {

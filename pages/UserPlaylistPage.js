@@ -24,7 +24,7 @@ function UserPlaylistPage ({loadUserPlaylist, userPlaylist}){
             <View style={styles.container}>
                 <SafeAreaView>
                     <View styles={styles.secondContainer}>
-                        <Text style={styles.title}>Music</Text>
+                        <Text style={styles.title}>My library</Text>
                     </View>
                     <ScrollView>
                     {userPlaylist.length > 0 ? userPlaylist?.map((playlist, i) =>{

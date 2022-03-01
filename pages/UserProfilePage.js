@@ -16,6 +16,14 @@ function UserProfilePage({userProfile, loadingData, loadUserPlaylist, userPlayli
        loadUserPlaylist();
     },[])
 
+    useEffect(() => {
+      const willFocusSubscription = navigation.addListener('focus', () => {
+        loadUserPlaylist();
+      });
+
+    return willFocusSubscription;
+    }, []);
+
     const Item = ({title, item}) => (
         <View>
           <TouchableOpacity style={styles.item} onPress={() =>{navigation.navigate("PlaylistSongsPage", item)}}>
@@ -32,7 +40,6 @@ function UserProfilePage({userProfile, loadingData, loadUserPlaylist, userPlayli
       </View>
       );
     
-
 
     const sUserProfile = useSelector((state) =>{return state.userReducer.data})
 
