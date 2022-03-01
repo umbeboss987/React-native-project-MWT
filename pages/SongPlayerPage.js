@@ -1,15 +1,62 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Image, Dimensions} from 'react-native';
 import { connect, useDispatch, useSelector } from "react-redux";
-import { useEffect} from 'react';
+import { useEffect, useState} from 'react';
 import {sCategories, sSingleCategory, sLoadingSingleCategory} from '../store/selectors/appSelectors';
 import {loadSingleCategory} from '../store/actions/appActions';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Slider from '@react-native-community/slider';
+import {Audio} from "expo-av";
+
 
 const {width , heigth} = Dimensions.get('window')
 
+    
+
+
+
+
+
 function SongPlayerPage ({route}){
+
+    const [playbackObj, setPlaybackObj] = useState();
+    const [status, setStatus] = useState(null);
+
+    const handlePressAudio = async () =>{
+    if(status == null){
+        const playbackObj = new Audio.Sound();
+        const newStatus = await playbackObj.loadAsync(require("../assets/music/Hollywood.mp3"), {shouldPlay : true});
+        newStatus.isPlaying = true;
+       return [setStatus(newStatus), setPlaybackObj(playbackObj)];         
+    }
+    
+      
+    console.log("playing" +status.isPlaying)
+    console.log("loaded" + status.isLoaded)
+        if(status.isLoaded && status.isPlaying){
+           const newStatus =  playbackObj.setStatusAsync({shouldPlay : false});
+           return [setStatus(newStatus), newStatus.isPlaying = false, newStatus.isLoaded = true];         
+        }
+
+        if(status.isLoaded && !status.isPlaying){
+            const newStatus = await playbackObj.playAsync();
+            return[setStatus(newStatus), newStatus.isPlaying = true]; 
+        }
+    }
+
+
+    useEffect (() =>{
+        Audio.requestPermissionsAsync();
+        Audio.setAudioModeAsync({
+       staysActiveInBackground: true,
+       interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+       shouldDuckAndroid: false,
+       playThroughEarpieceAndroid: false,
+       allowsRecordingIOS: false,
+       interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+       playsInSilentModeIOS: true,
+       });
+   },[handlePressAudio])
   
     return (
         <View style={styles.maxContainer}>
@@ -27,7 +74,9 @@ function SongPlayerPage ({route}){
                </View>
                <View style={styles.musicControl}>
                     <Icon name="play-skip-back-outline" color="white" size={35} style={{marginTop:20}}></Icon>
-                    <Icon name="ios-pause-circle" color="white" size={80}></Icon>
+                    <TouchableOpacity onPress={()=>{handlePressAudio()}}>
+                        <Icon name={ status === null || status.isPlaying == false  ? "ios-play-circle" : "ios-pause-circle" } color="white" size={80}></Icon>
+                    </TouchableOpacity>
                     <Icon name="play-skip-forward-outline" color="white" size={35} style={{marginTop:20}}></Icon>
                </View>
             </View>
