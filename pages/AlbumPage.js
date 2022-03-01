@@ -1,12 +1,23 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity , Image, ScrollView, ActivityIndicator} from 'react-native';
 import { connect, useDispatch, useSelector } from "react-redux";
-import { useEffect} from 'react';
+import { useEffect, useState} from 'react';
 import {sCategories, sSingleCategory, sLoadingSingleCategory} from '../store/selectors/appSelectors';
 import {loadSingleCategory} from '../store/actions/appActions';
 import {LinearGradient} from 'expo-linear-gradient';
+import PickerModal from '../components/PickerModal';
+import Icon from 'react-native-vector-icons/Ionicons';
+
 
 function AlbumPage ({loadingSingleCategory, route,loadSingleCategory}){
+
+    const [showModal, setShowModal] = useState(false);
+    const [item, setItem] = useState(null);
+
+
+    const items = [
+        'Save in my Music',
+       ];
 
     useEffect(() =>{
       const {id} = route.params;
@@ -44,17 +55,25 @@ function AlbumPage ({loadingSingleCategory, route,loadSingleCategory}){
             <View style={styles.secondContainer}>
                 <ScrollView>
                     {singleCategory.tracks.items.map((track,i) =>{
-                    return(    
-                    <TouchableOpacity key={i}>
-                        <View style={styles.containerSongs}>
-                            <Text style={styles.songName}>{track.track.name}</Text>
-                            <Text style={styles.artistName}>{track.track.artists[0].name}</Text>
-                        </View>
-                    </TouchableOpacity>
+                    return(  
+                    <View style={styles.renderItemContainer}>
+                        <TouchableOpacity key={i}>
+                            <View style={styles.containerSongs}>
+                                <Text style={styles.songName}>{track.track.name}</Text>
+                                <Text style={styles.artistName}>{track.track.artists[0].name}</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.containerIcon} onPress={() =>{setShowModal(true)}}>
+                            <View >
+                            <Icon name="ellipsis-vertical-outline" style={styles.icon}  size={25}/>
+                            </View>
+                        </TouchableOpacity>
+                   </View>  
                     )})}
                 </ScrollView>
             </View>
         </LinearGradient>
+        <PickerModal visible={showModal} items={items} onClose={() =>{setShowModal(false)}} />
     </ScrollView>
     )
   }
@@ -89,6 +108,13 @@ const styles = StyleSheet.create({
        fontSize:18,
        color: 'white'
    },
+   icon:{
+    color: 'white',
+  },
+   containerIcon:{
+    marginLeft: 'auto',
+    justifyContent: 'center',
+  },
    artistName:{
     fontSize:14,
     color: 'grey',
@@ -98,7 +124,10 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     backgroundColor: '#010916'
-   }
+   },
+   renderItemContainer:{
+    flexDirection: 'row',
+  },
 })
 
 

@@ -16,15 +16,19 @@ function PlaylistSongsPage ({route, getSinglePlaylist}){
         getSinglePlaylist(id);
     },[])
 
+    const items = [
+      'Save in my Music',
+     ];
 
 
     const [showModal, setShowModal] = useState(false);
 
-    const Item = ({title, item}) => (
+    const Item = ({title, item, artist}) => (
       <View>
         <TouchableOpacity style={styles.item}>
           <View >
             <Text style={styles.titleSong}>{title}</Text>
+            <Text style={styles.typeSong}>{artist}</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -32,7 +36,7 @@ function PlaylistSongsPage ({route, getSinglePlaylist}){
 
   const renderItem = ({ item }) => (
     <View>
-      <Item title={item.track.name} item={item}/>
+      <Item title={item.track.name} item={item} artist={item.track.artists[0].name}/>
     </View>
     );
 
@@ -49,7 +53,7 @@ function PlaylistSongsPage ({route, getSinglePlaylist}){
                  renderItem={renderItem}
                  keyExtractor={item => item.track.id}
                />
-              <ModalPicker visible={showModal} onClose={() =>{setShowModal(false)}} />
+             <ModalPicker visible={showModal} items={items} onClose={() =>{setShowModal(false)}} />
             </SafeAreaView>
         </View>
 )

@@ -39,8 +39,8 @@ function  ModalPicker ({visible, onClose, items, item, delete_song}){
                         onValueChange={(value) => setValueState(value)}
                         style={styles.itemPicker}
                     >
-                        { items != undefined ? items.map(item =>
-                        <Picker.Item value={item}  label={item} style={{color: 'white'}}/>
+                        { items != undefined ? items.map((item,i) =>
+                        <Picker.Item value={item} key={i} label={item} style={{color: 'white'}}/>
                         ):  <Picker.Item />}
                     </Picker>
                 </View>

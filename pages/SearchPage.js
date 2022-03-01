@@ -48,6 +48,7 @@ function SearchPage({loadSearchSong, searchSong, navigation}){
           );
 
         const renderItem = ({ item }) => (
+          
           <View>
             <Item id={item.uri} title={item.name} type={item.album_type} artistName={item.artists[0].name} item={item}/>
           </View>

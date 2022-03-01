@@ -47,7 +47,7 @@ export default function RootNavigator (){
 function Tabs (){
     return (
         <TabNavigator.Navigator
-            tabBarOptions={{
+        options={{
                 showLabel: false,
                 activeTintColor: 'white'
                

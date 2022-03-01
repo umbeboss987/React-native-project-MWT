@@ -27,7 +27,7 @@ function UserPlaylistPage ({loadUserPlaylist, userPlaylist}){
                         <Text style={styles.title}>My library</Text>
                     </View>
                     <ScrollView>
-                    {userPlaylist.length > 0 ? userPlaylist?.map((playlist, i) =>{
+                    {userPlaylist.length >= 0 ? userPlaylist?.map((playlist, i) =>{
                     return(    
                     <View style={styles.renderItemContainer} key={i}>
                         <TouchableOpacity key={playlist.id} style={styles.item}>
@@ -44,7 +44,7 @@ function UserPlaylistPage ({loadUserPlaylist, userPlaylist}){
                    </View>
                     )}) : <View></View>}
                 </ScrollView>
-                  <ModalPicker visible={showModal} onClose={() =>{setShowModal(false)}} items={items} item={item}/>
+                  <ModalPicker visible={showModal} onClose={() =>{setShowModal(false)}} items={items} key={items[0]} item={item}/>
                 </SafeAreaView>
             </View>
     )
