@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import ModalPicker from '../components/ModalPicker';
 
 
-function PlaylistSongsPage ({route, getSinglePlaylist}){
+function PlaylistSongsPage ({route, getSinglePlaylist, navigation}){
 
   const {id} = route.params;
 
@@ -25,7 +25,7 @@ function PlaylistSongsPage ({route, getSinglePlaylist}){
 
     const Item = ({title, item, artist}) => (
       <View>
-        <TouchableOpacity style={styles.item}>
+        <TouchableOpacity style={styles.item} onPress={()=>{navigation.navigate("SongPlayerPage", item.track)}}>
           <View >
             <Text style={styles.titleSong}>{title}</Text>
             <Text style={styles.typeSong}>{artist}</Text>
@@ -44,10 +44,17 @@ function PlaylistSongsPage ({route, getSinglePlaylist}){
 
       return(  
         <View style={styles.container}>
+          
             <SafeAreaView>
                 <View styles={styles.secondContainer}>
-                    <Text style={styles.title}>My Playlist</Text>
+                    <View  style={{marginTop:28, marginLeft:20,marginBottom:40, flexDirection:'row', justifyContent: 'space-between'}}>
+                      <TouchableOpacity onPress={()=>{navigation.goBack()}}>
+                          <Icon name="arrow-back-outline" style={styles.topIcon}  size={30}/>
+                      </TouchableOpacity>
+                      <Text style={styles.title}>My Playlist</Text>
+                    </View> 
                 </View>
+
                 <FlatList
                  data={sUserProfile}
                  renderItem={renderItem}
@@ -66,18 +73,17 @@ const styles = StyleSheet.create({
 container:{
     backgroundColor: "#010916",
     flex:1,
-    flexDirection: 'column',
-    textAlign: 'center',
 },
 title: {
     fontSize:30,
     color: 'white',
-    marginTop:20,
-    marginLeft:15
+    marginLeft:15,
+    width: '65%',
 },
-secondContainer:{
-    width:100,
-    height:30
+secondContainer:{ 
+    height:60,
+    width:'100%',
+    justifyContent: 'space-around',
 },
 containerSongs:{
     flex: 1,
@@ -121,6 +127,9 @@ titleSong: {
     marginLeft:10,
     width: '100%',
     flexWrap:'wrap',
+},
+topIcon:{
+  color:"white"
 },
 })
 

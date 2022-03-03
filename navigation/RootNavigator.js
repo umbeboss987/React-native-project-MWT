@@ -35,10 +35,10 @@ export default function RootNavigator (){
                 <React.Fragment>
                     <RootStack.Screen options={{ headerShown: false }} name="Tab" component={Tabs} />
                 </React.Fragment> 
-                <RootStack.Screen name="Album" component={AlbumPage} /> 
-                <RootStack.Screen name="Profile" component={UserProfilePage}  />  
-                <RootStack.Screen name="SongPlayerPage" component={SongPlayerPage}  />  
-                <RootStack.Screen name="PlaylistSongsPage" component={PlaylistSongsPage}  />                                                                                      
+                <RootStack.Screen options={{ headerShown: false }} name="Album" component={AlbumPage} /> 
+                <RootStack.Screen options={{ headerShown: false }} name="Profile" component={UserProfilePage}  />  
+                <RootStack.Screen options={{ headerShown: false }} name="SongPlayerPage" component={SongPlayerPage}  />  
+                <RootStack.Screen options={{ headerShown: false }} name="PlaylistSongsPage" component={PlaylistSongsPage}  />                                                                                      
             </RootStack.Navigator>            
         </NavigationContainer>
     )

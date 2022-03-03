@@ -45,6 +45,14 @@ function UserProfilePage({userProfile, loadingData, loadUserPlaylist, userPlayli
 
     return(
         <SafeAreaView style={styles.container}>
+            <View style={styles.containerTitle}>
+              <View  style={{marginTop:28, marginLeft:20, width:'45%'}}>
+                  <TouchableOpacity onPress={()=>{navigation.goBack()}}>
+                      <Icon name="arrow-back-outline" style={styles.topIcon}  size={30}/>
+                  </TouchableOpacity>
+              </View> 
+              <Text style={{color:"white", width:'68%',fontSize:40, marginTop:20}}>Profile</Text>
+            </View>
             <View >
                 <View style={styles.imageContainer}>
                 {loadingData == true ?  <Image source={{uri: sUserProfile?.data?.images[0].url}} style={styles.image}>
@@ -153,6 +161,13 @@ const styles = StyleSheet.create({
         width: '100%',
         flexWrap:'wrap',
       },
+      topIcon:{
+        color:"white"
+    },
+    containerTitle:{
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+    }
 })
 
 

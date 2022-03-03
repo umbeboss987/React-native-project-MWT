@@ -20,3 +20,6 @@ export const sLoadUserProfile = (state) => state.userReducer.data;
 export const sLoadingData = (state) => state.userReducer.loadingData;
 
 export const sUserLibrary = (state) => state.userReducer.library;
+
+export const sSingleTrack = (state) => state.userReducer.generes;
+

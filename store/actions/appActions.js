@@ -24,7 +24,10 @@ import { LOAD_CATEGORIES_SUCCESS,
         DELETE_SONG_ERORR,
         GET_SINGLE_PLAYLIST_SUCCESS,
         GET_SINGLE_PLAYLIST_ERROR,
-        GET_SINGLE_PLAYLIST
+        GET_SINGLE_PLAYLIST,
+        GET_SINGLE_TRACK,
+        GET_SINGLE_TRACK_SUCCESS,
+        GET_SINGLE_TRACK_ERROR
     } 
 from './ActionTypes'
 import axios from 'axios';
@@ -138,7 +141,7 @@ export const loadUserPlaylist = () => async dispatch => {
 export const loadSearchSong = (input) => async dispatch => {
     
     try{
-        const res = await axiosInstance.get(`search?type=album,track&limit=20&q=${input}`);
+        const res = await axiosInstance.get(`search?type=track&limit=20&q=${input}`);
         dispatch({
             type: LOAD_SEARCH_SUCCESS,
             payload: res.data
@@ -229,6 +232,27 @@ export const getSinglePlaylist = (id) => async dispatch => {
     catch(e){
         dispatch( {
             type: GET_SINGLE_PLAYLIST_ERROR,
+            payload: console.log(e),
+        })
+    }
+
+}
+
+export const getSingleTrack = (id) => async dispatch => {
+    dispatch({
+        type: GET_SINGLE_TRACK,
+    })
+    
+    try{
+        const res = await axiosInstance.get(`tracks/${id}`);
+        dispatch({
+            type: GET_SINGLE_TRACK_SUCCESS,
+            payload: res
+        })
+    }
+    catch(e){
+        dispatch( {
+            type: GET_SINGLE_TRACK_ERROR,
             payload: console.log(e),
         })
     }

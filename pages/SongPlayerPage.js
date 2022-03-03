@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Image, Dimensio
 import { connect, useDispatch, useSelector } from "react-redux";
 import { useEffect, useState} from 'react';
 import {sCategories, sSingleCategory, sLoadingSingleCategory} from '../store/selectors/appSelectors';
-import {loadSingleCategory} from '../store/actions/appActions';
+import {getSingleTrack, loadSingleCategory} from '../store/actions/appActions';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Slider from '@react-native-community/slider';
 import {Audio} from "expo-av";
@@ -13,14 +13,20 @@ const {width , heigth} = Dimensions.get('window')
 
     
 
-
-
-
-
-function SongPlayerPage ({route}){
+function SongPlayerPage ({route, getSingleTrack,navigation}){
 
     const [playbackObj, setPlaybackObj] = useState();
     const [status, setStatus] = useState(null);
+
+   
+
+    useEffect(()=>{
+        const {id} = route.params
+        console.log(route.params)
+        getSingleTrack(id)
+    },[getSingleTrack])
+
+    const singleTrack = useSelector((state) =>{return state.appReducer.generes?.data})
 
     const handlePressAudio = async () =>{
     if(status == null){
@@ -30,9 +36,6 @@ function SongPlayerPage ({route}){
        return [setStatus(newStatus), setPlaybackObj(playbackObj)];         
     }
     
-      
-    console.log("playing" +status.isPlaying)
-    console.log("loaded" + status.isLoaded)
         if(status.isLoaded && status.isPlaying){
            const newStatus =  playbackObj.setStatusAsync({shouldPlay : false});
            return [setStatus(newStatus), newStatus.isPlaying = false, newStatus.isLoaded = true];         
@@ -61,12 +64,18 @@ function SongPlayerPage ({route}){
     return (
         <View style={styles.maxContainer}>
         <SafeAreaView style={styles.container}>
+        <View  style={{ marginLeft:15}}>
+                    <TouchableOpacity onPress={()=>{navigation.goBack()}}>
+                        <Icon name="arrow-back-outline" style={styles.topIcon}  size={30}/>
+                    </TouchableOpacity>
+              </View> 
            <View style={styles.mainContainer}>
                <View style={styles.artworkContainer}>
-                   <Image style={styles.image} source={{uri: route.params.images[0].url}}></Image>
+              
+                    <Image source={{uri: singleTrack?.album.images[0].url}} style={styles.image}></Image>
                    <View style={styles.textContainer} >
-                    <Text style={styles.textSong}>{route.params.name}</Text>
-                    <Text style={styles.textArtistName}>{route.params.artists[0].name}</Text>
+                    <Text style={styles.textSong}>{singleTrack?.name}</Text>
+                    <Text style={styles.textArtistName}>{singleTrack?.artists[0].name}</Text>
                    </View>
                </View>
                <View>
@@ -101,8 +110,8 @@ function mapStateToProps(state) {
   
   function mapDispatchToProps(dispatch) {
     return {
-        loadSingleCategory:function(id){
-           dispatch(loadSingleCategory(id))
+        getSingleTrack:function(id){
+           dispatch(getSingleTrack(id))
         }
      
     };
@@ -147,7 +156,7 @@ const styles = StyleSheet.create({
     },
     image:{
         height:'100%',
-        width:'100%',
+        width:'90%',
     },
     slider:{
         width:350
@@ -171,5 +180,8 @@ const styles = StyleSheet.create({
         color:'grey',
         fontSize:20,
         marginTop:7
+    },
+    topIcon:{
+        color:"white"
     }
 })
