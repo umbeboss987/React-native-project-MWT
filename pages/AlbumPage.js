@@ -31,7 +31,7 @@ function AlbumPage ({loadingSingleCategory, route,loadSingleCategory, navigation
     if(loadingSingleCategory){
 
         return(
-            <View style={styles.secondContainer}>
+            <View style={styles.thirdContainer}>
                 <ActivityIndicator size="large"/>
             </View>
         )
@@ -131,13 +131,20 @@ const styles = StyleSheet.create({
    secondContainer:{
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#010916'
+    backgroundColor: '#010916',
    },
    renderItemContainer:{
     flexDirection: 'row',
   },
   topIcon:{
       color:"black"
+  },
+  thirdContainer:{
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: '#010916',
+    justifyContent:"center",
+    alignItems:"center"
   }
 })
 
