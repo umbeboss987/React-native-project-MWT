@@ -47,7 +47,7 @@ function UserProfilePage({userProfile, loadingData, loadUserPlaylist, userPlayli
         <SafeAreaView style={styles.container}>
             <View style={styles.containerTitle}>
               <View  style={{marginTop:28, marginLeft:20, width:'45%'}}>
-                  <TouchableOpacity onPress={()=>{navigation.goBack()}}>
+                  <TouchableOpacity onPress={()=>{navigation.navigate("Home")}}>
                       <Icon name="arrow-back-outline" style={styles.topIcon}  size={30}/>
                   </TouchableOpacity>
               </View> 

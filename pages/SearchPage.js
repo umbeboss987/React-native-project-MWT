@@ -15,7 +15,7 @@ import PickerModal from '../components/PickerModal';
 
 function SearchPage({loadSearchSong, searchSong, navigation}){
 
-        const [input, setInput] = useState("");
+        const [input, setInput] = useState(null);
         const [showModal, setShowModal] = useState(false);
         //const [item, setItem] = useState();
         const [item, setItem] = useState(null);
@@ -31,6 +31,9 @@ function SearchPage({loadSearchSong, searchSong, navigation}){
         ];
 
         useEffect (()=>{
+          if(input == null){
+            return;
+          }
           loadSearchSong(input);
         },[input])
 

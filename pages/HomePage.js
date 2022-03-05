@@ -69,16 +69,16 @@ class HomePage extends Component {
                   </View>
                 </View>
               <View style={styles.containerCategories}>
-                <Text style={styles.title}>New Releases</Text>
+                <Text style={styles.title}>Music Party</Text>
                 <ScrollView 
                   contentContainerStyle={{
                   flexDirection: 'row',
                   flexWrap: 'wrap'}}
                 >
-                  {!loadingNewReleases ? newReleases.items?.map((album, i)=>{
+                  {!loadingNewReleases ? newReleases.map((album, i)=>{
                     return(
                       <View key={i}  style={styles.subContainer}>
-                        <Categories title={album.name} images={album.images[0].url} />
+                        <Categories onPress={()=>{navigation.navigate('Album', album)}} title={album.name} images={album.images[0].url} />
                         <Text style={styles.textSong}>{album.name}</Text>
                       </View>
                         )

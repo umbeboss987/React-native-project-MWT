@@ -46,7 +46,10 @@ export default function (state = USER_STATE, action) {
         ...state,
         playlists: change
         };
-        
+        case 'ADD_TRACK_PLAYLIST_SUCCESS':
+            return {
+            ...state
+        };
         default:
             return state
     }

@@ -39,6 +39,7 @@ import { LOAD_CATEGORIES_SUCCESS,
 from './ActionTypes'
 import axios from 'axios';
 import axiosInstance from '../../interceptor/index';
+import {sUserPlaylist} from '../../store/selectors/appSelectors'
 
 export const loadCategories = () => async dispatch => {
 
@@ -68,10 +69,10 @@ export const loadNewReleases = () => async dispatch => {
         type:LOAD_NEW_RELEASES,
     })    
     try{
-        const res = await axiosInstance.get(`browse/new-releases`)
+        const res = await axiosInstance.get(`browse/categories/party/playlists`)
         dispatch({
             type: LOAD_NEW_RELEASES_SUCCESS,
-            payload: res.data.albums
+            payload: res.data.playlists.items
         })
     }
     catch(e){

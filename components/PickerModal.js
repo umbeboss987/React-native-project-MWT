@@ -19,7 +19,6 @@ function PickerModal ({visible, onClose, items, item ,saveTrack, uri}) {
                 }
             },[value])
 
-            const prova=["prova"]
             const save_track_album = ()=>{
                     saveTrack(item);
                     onClose();
@@ -49,8 +48,8 @@ function PickerModal ({visible, onClose, items, item ,saveTrack, uri}) {
                         onValueChange={(value) => setValueState(value)}
                         style={styles.itemPicker}
                     >
-                        { items.map((item) =>{
-                           return <Picker.Item value={item} label={item} />
+                        { items.map((item, i) =>{
+                           return <Picker.Item value={item} key={i} label={item} />
                         })
                         }
                     </Picker>

@@ -12,16 +12,10 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 function AlbumPage ({loadingSingleCategory, route,loadSingleCategory, navigation}){
 
-    const [showModal, setShowModal] = useState(false);
-    const [item, setItem] = useState(null);
-
-
-    const items = [
-        'Save in my Music',
-       ];
 
     useEffect(() =>{
       const {id} = route.params;
+      console.log(id);
         loadSingleCategory(id);
     },[loadSingleCategory])
 
@@ -70,17 +64,11 @@ function AlbumPage ({loadingSingleCategory, route,loadSingleCategory, navigation
                                 <Text style={styles.artistName}>{track.track.artists[0].name}</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity   style={styles.containerIcon} onPress={() =>{setShowModal(true),setItem(track)}}>
-                            <View >
-                            <Icon name="ellipsis-vertical-outline" style={styles.icon}  size={25}/>
-                            </View>
-                        </TouchableOpacity>
                    </View>  
                     )})}
                 </ScrollView>
             </View>
         </LinearGradient>
-        <PickerModal visible={showModal} items={items} onClose={() =>{setShowModal(false)}} item={item} />
     </ScrollView>
     </View>
     )

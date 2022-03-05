@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity , FlatList, SafeAreaView} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity , FlatList, SafeAreaView, Alert} from 'react-native';
 import { connect } from "react-redux";
 import { useEffect ,useState} from 'react';
 import {sUserPlaylist} from '../store/selectors/appSelectors';
@@ -8,18 +8,24 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 
 
-function AddToPlaylist ({route,loadUserPlaylist, userPlaylist, addTrackPlaylist}){
-
-
-  
+function AddToPlaylist ({route,loadUserPlaylist, userPlaylist, addTrackPlaylist, navigation}){
 
     useEffect (()=>{
         loadUserPlaylist()
     },[loadUserPlaylist])
 
+
+    const add_track_playlist = (id) => {
+        addTrackPlaylist(id, route.params)
+        Alert.alert("Added to your Playlist","",[
+            {text : 'Ok', onPress: ()=>{}}
+        ]);
+        navigation.navigate("Profile")
+    }
+
     const Item = ({title, id}) => (
         <View>
-          <TouchableOpacity style={styles.item} onPress={()=>{addTrackPlaylist(id, route.params)}}>
+          <TouchableOpacity style={styles.item} onPress={()=> add_track_playlist(id)}>
             <View >
               <Text style={styles.titleSong}>{title}</Text>
             </View>
@@ -36,9 +42,14 @@ function AddToPlaylist ({route,loadUserPlaylist, userPlaylist, addTrackPlaylist}
     return(
         
             <View style={styles.container}>
-                <SafeAreaView>
+                <SafeAreaView>                 
                     <View styles={styles.secondContainer}>
-                        <Text style={styles.title}>Choose a Playlist</Text>
+                        <View style={styles.containerTitle}>
+                            <TouchableOpacity onPress={()=>{navigation.goBack()}}>
+                                <Icon name="arrow-back-outline" style={styles.topIcon}  size={30}/>
+                            </TouchableOpacity>
+                            <Text style={styles.title}>Choose a Playlist</Text>
+                        </View>
                     </View>
                     <FlatList
                         data={userPlaylist.items}
@@ -64,11 +75,9 @@ const styles = StyleSheet.create({
         fontSize:30,
         color: 'white',
         marginTop:20,
-        marginLeft:15
+        width:'70%'
     },
     secondContainer:{
-        width:100,
-        height:30
     },
     containerSongs:{
         flex: 1,
@@ -96,6 +105,16 @@ const styles = StyleSheet.create({
       renderItemContainer:{
         flexDirection: 'row',
       },
+      topIcon:{
+        color:"white", 
+        marginTop:20,
+        marginLeft:7
+    },
+    containerTitle:{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingBottom:40
+    }
 })
 
 
