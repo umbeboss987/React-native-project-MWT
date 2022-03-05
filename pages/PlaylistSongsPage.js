@@ -3,32 +3,40 @@ import { StyleSheet, Text, View, TouchableOpacity , Image, ScrollView, SafeAreaV
 import { connect, useSelector } from "react-redux";
 import { useEffect ,useState} from 'react';
 import {sUserLibrary} from '../store/selectors/appSelectors';
-import {getSinglePlaylist} from '../store/actions/appActions';
+import {getSinglePlaylist, deleteTrackPlaylist} from '../store/actions/appActions';
 import Icon from 'react-native-vector-icons/Ionicons';
-import ModalPicker from '../components/ModalPicker';
+import DeleteSong from '../components/DeleteSong';
 
 
-function PlaylistSongsPage ({route, getSinglePlaylist, navigation}){
+function PlaylistSongsPage ({route, getSinglePlaylist, navigation, deleteSongPlaylist}){
 
   const {id} = route.params;
+
+  const [showModal, setShowModal] = useState(false);
+  const [uri, setUri] = useState();
+
 
     useEffect (() =>{
         getSinglePlaylist(id);
     },[])
 
+
     const items = [
-      'Save in my Music',
+      'Delete from Playlist',
      ];
 
-
-    const [showModal, setShowModal] = useState(false);
-
-    const Item = ({title, item, artist}) => (
-      <View>
+    //deleteSongPlaylist(id,uri)
+    const Item = ({title, item, artist, uri}) => (
+      <View style={styles.renderItemContainer}>
         <TouchableOpacity style={styles.item} onPress={()=>{navigation.navigate("SongPlayerPage", item.track)}}>
           <View >
             <Text style={styles.titleSong}>{title}</Text>
             <Text style={styles.typeSong}>{artist}</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.containerIcon} onPress={() =>{setShowModal(true), setUri(uri)}}>
+          <View >
+            <Icon name="ellipsis-vertical-outline" style={styles.icon}  size={25}/>
           </View>
         </TouchableOpacity>
       </View>
@@ -36,11 +44,11 @@ function PlaylistSongsPage ({route, getSinglePlaylist, navigation}){
 
   const renderItem = ({ item }) => (
     <View>
-      <Item title={item.track.name} item={item} artist={item.track.artists[0].name}/>
+      <Item title={item.track.name} item={item} artist={item.track.artists[0].name} uri={item.track.uri}/>
     </View>
     );
 
-    const sUserProfile = useSelector((state) =>{return state.userReducer.playlists.data?.items})
+    const sUserProfile = useSelector((state) =>{return state.userReducer.playlists})
 
       return(  
         <View style={styles.container}>
@@ -60,7 +68,7 @@ function PlaylistSongsPage ({route, getSinglePlaylist, navigation}){
                  renderItem={renderItem}
                  keyExtractor={item => item.track.id}
                />
-             <ModalPicker visible={showModal} items={items} onClose={() =>{setShowModal(false)}} />
+             <DeleteSong visible={showModal} items={items} onClose={() =>{setShowModal(false)}} uri={uri} id={id}/>
             </SafeAreaView>
         </View>
 )
@@ -143,6 +151,9 @@ function mapDispatchToProps(dispatch) {
 return {
     getSinglePlaylist:function(id){
        dispatch(getSinglePlaylist(id))
+    },
+    deleteSongPlaylist:function(id, uri){
+      dispatch(deleteTrackPlaylist(id, uri))
     }
  
 };

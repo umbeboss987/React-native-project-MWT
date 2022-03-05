@@ -24,6 +24,8 @@ const LoginButton = () =>{
             "user-top-read",
             "user-modify-playback-state",
             "streaming",
+            "playlist-modify-private",
+            "playlist-modify-public",
             //"user-read-email",
             "user-read-private",
         ],

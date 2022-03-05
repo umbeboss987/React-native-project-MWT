@@ -27,7 +27,10 @@ import { LOAD_CATEGORIES_SUCCESS,
         GET_SINGLE_PLAYLIST,
         GET_SINGLE_TRACK,
         GET_SINGLE_TRACK_SUCCESS,
-        GET_SINGLE_TRACK_ERROR
+        GET_SINGLE_TRACK_ERROR,
+        DELETE_TRACK_PLAYLIST,
+        DELETE_TRACK_PLAYLIST_SUCCESS,
+        DELETE_TRACK_PLAYLIST_ERROR,
     } 
 from './ActionTypes'
 import axios from 'axios';
@@ -254,6 +257,31 @@ export const getSingleTrack = (id) => async dispatch => {
         dispatch( {
             type: GET_SINGLE_TRACK_ERROR,
             payload: console.log(e),
+        })
+    }
+
+}
+
+
+export const deleteTrackPlaylist = (id, uri) => async dispatch => {
+
+    dispatch({
+        type: DELETE_TRACK_PLAYLIST,
+    })
+    
+    try{
+        const res = await axiosInstance.delete(`playlists/${id}/tracks`,{
+            data:"{\"tracks\":[{\"uri\":\"" + uri + "\"}]}",
+        });
+        dispatch({
+            type: DELETE_TRACK_PLAYLIST_SUCCESS,
+            payload: uri
+        })
+    }
+    catch(e){
+        dispatch( {
+            type: DELETE_TRACK_PLAYLIST_ERROR,
+            payload: e
         })
     }
 
