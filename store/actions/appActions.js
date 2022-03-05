@@ -31,6 +31,10 @@ import { LOAD_CATEGORIES_SUCCESS,
         DELETE_TRACK_PLAYLIST,
         DELETE_TRACK_PLAYLIST_SUCCESS,
         DELETE_TRACK_PLAYLIST_ERROR,
+        ADD_TRACK_PLAYLIST,
+        ADD_TRACK_PLAYLIST_SUCCESS,
+        ADD_TRACK_PLAYLIST_ERROR,
+
     } 
 from './ActionTypes'
 import axios from 'axios';
@@ -281,6 +285,29 @@ export const deleteTrackPlaylist = (id, uri) => async dispatch => {
     catch(e){
         dispatch( {
             type: DELETE_TRACK_PLAYLIST_ERROR,
+            payload: e
+        })
+    }
+
+}
+
+
+export const addTrackPlaylist = (id, uri) => async dispatch => {
+
+    dispatch({
+        type: ADD_TRACK_PLAYLIST,
+    })
+    
+    try{
+        const res = await axiosInstance.post(`playlists/${id}/tracks?uris=${uri}`);
+        dispatch({
+            type: ADD_TRACK_PLAYLIST_SUCCESS,
+            payload: uri
+        })
+    }
+    catch(e){
+        dispatch( {
+            type: ADD_TRACK_PLAYLIST_ERROR,
             payload: e
         })
     }

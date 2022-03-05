@@ -19,7 +19,7 @@ function SearchPage({loadSearchSong, searchSong, navigation}){
         const [showModal, setShowModal] = useState(false);
         //const [item, setItem] = useState();
         const [item, setItem] = useState(null);
-
+        const [uri, setUri] = useState();
 
         const songs = searchSong;
         
@@ -27,6 +27,7 @@ function SearchPage({loadSearchSong, searchSong, navigation}){
 
         const items = [
          'Save in my Music',
+         "Add to playlist"
         ];
 
         useEffect (()=>{
@@ -36,7 +37,7 @@ function SearchPage({loadSearchSong, searchSong, navigation}){
         
         
               
-        const Item = ({ title,artistName, item}) => (
+        const Item = ({ title,artistName, item, uri}) => (
             <View style={styles.renderItemContainer}>
               <TouchableOpacity style={styles.item} onPress={()=>{navigation.navigate("SongPlayerPage", item)}}>
                 <View >
@@ -44,7 +45,7 @@ function SearchPage({loadSearchSong, searchSong, navigation}){
                   <Text style={styles.typeSong}>{artistName}</Text>
                 </View>
               </TouchableOpacity>
-                <TouchableOpacity style={styles.containerIcon} onPress={() =>{setItem(item),setShowModal(true)}}>
+                <TouchableOpacity style={styles.containerIcon} onPress={() =>{setItem(item),setShowModal(true),setUri(uri)}}>
                   <View >
                     <Icon name="ellipsis-vertical-outline" style={styles.icon}  size={25}/>
                   </View>
@@ -55,7 +56,7 @@ function SearchPage({loadSearchSong, searchSong, navigation}){
         const renderItem = ({ item }) => (
           
           <View>
-            <Item id={item.uri} title={item.name}  artistName={item.artists[0].name} item={item}/>
+            <Item uri={item.uri} title={item.name}  artistName={item.artists[0].name} item={item}/>
           </View>
           );
         
@@ -80,7 +81,7 @@ function SearchPage({loadSearchSong, searchSong, navigation}){
                     />
                 : <ActivityIndicator/>}
                 </View>
-                <PickerModal visible={showModal} items={items} onClose={() =>{setShowModal(false)}} item={item}/>
+                <PickerModal visible={showModal} items={items} onClose={() =>{setShowModal(false)}} item={item} uri={uri}/>
             </SafeAreaView>
         )
 

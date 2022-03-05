@@ -1,38 +1,28 @@
 import { StyleSheet,View, Modal, TouchableOpacity, Alert} from 'react-native';
-import  Icon  from 'react-native-elements/dist/icons/Icon';
+import { Picker } from "@react-native-picker/picker";
+import { Icon } from 'react-native-elements/dist/icons/Icon';
 import { useEffect, useState} from 'react';
 import { connect , useSelector} from "react-redux";
-import {Picker} from '@react-native-picker/picker';
-import {saveTrack, loadUserPlaylist} from '../store/actions/appActions';
-import AddSong from '../components/AddSong';
-import { useNavigation } from '@react-navigation/native';
+import {deleteTrackPlaylist} from '../store/actions/appActions';
 
+function  AddSong ({visible, onClose, items,id, uri, deleteSongPlaylist}){
 
-function PickerModal ({visible, onClose, items, item ,saveTrack, uri}) {
-             const navigation = useNavigation();
+            const [value, setValueState] = useState(" ")
 
-
-            const [value, setValueState] = useState("stringa")
             useEffect(() =>{
                 if(value){
                     setValueState(value)
                 }
             },[value])
 
-            const prova=["prova"]
-            const save_track_album = ()=>{
-                    saveTrack(item);
-                    onClose();
-                    Alert.alert("Added to your library","",[
-                        {text : 'Ok', onPress: ()=>{console.log('alert Closed')}}
-                    ]);
-            }
-            const addToPlaylist = () => {
+            const deleteSong = () =>{
+                deleteSongPlaylist(id,uri);
                 onClose();
-                 navigation.navigate("AddToPlaylist", uri);              
+                Alert.alert("Deleted item","",[
+                    {text : 'Ok', onPress: ()=>{console.log('alert Closed')}}
+                ]);
             }
     return(
-        <View>
         <Modal animated transparent visible={visible} animationType="slide">
             <View style={styles.modalContainer}>
                 <View style={styles.pickerContainer}>
@@ -40,8 +30,8 @@ function PickerModal ({visible, onClose, items, item ,saveTrack, uri}) {
                         <TouchableOpacity onPress={onClose}>
                             <Icon name="close" color="purple" size={30}/>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={value == "Save in my Music" ? save_track_album : addToPlaylist}>
-                            <Icon name="check"  color="purple" size={30}/>
+                        <TouchableOpacity>
+                            <Icon name="check" onPress={deleteSong} color="purple" size={30}/>
                         </TouchableOpacity>
                     </View>
                     <Picker
@@ -49,17 +39,15 @@ function PickerModal ({visible, onClose, items, item ,saveTrack, uri}) {
                         onValueChange={(value) => setValueState(value)}
                         style={styles.itemPicker}
                     >
-                        { items.map((item) =>{
-                           return <Picker.Item value={item} label={item} />
-                        })
-                        }
+                        { items != undefined ? items.map((item,i) =>
+                        <Picker.Item value={item} key={i} label={item} style={{color: 'white'}}/>
+                        ):  <Picker.Item />}
                     </Picker>
                 </View>
             </View>
         </Modal>
-        </View>
    )
-}
+  }
 
 
 
@@ -94,17 +82,16 @@ function mapStateToProps(state) {
   
   function mapDispatchToProps(dispatch) {
     return {
-        saveTrack: function(id){
-            dispatch(saveTrack(id))
+        loadSearchSong: function(input){
+            dispatch(loadSearchSong(input))
         },
-        loadUserPlaylist: function() {
-            dispatch(loadUserPlaylist())
+        deleteSongPlaylist: function(id,uri){
+            dispatch(deleteTrackPlaylist(id,uri))
         }
-      
     };
   }
   
 export default connect(
     mapStateToProps,
     mapDispatchToProps,
-  )(PickerModal);
+  )(AddSong);

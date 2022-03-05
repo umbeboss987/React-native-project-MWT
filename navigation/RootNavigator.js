@@ -12,6 +12,7 @@ import UserPlaylistPage from '../pages/UserPlaylistPage';
 import UserProfilePage from '../pages/UserProfilePage';
 import SongPlayerPage from '../pages/SongPlayerPage';
 import PlaylistSongsPage from '../pages/PlaylistSongsPage';
+import AddToPlaylist from '../pages/AddToPlaylist';
 
 
 
@@ -38,7 +39,8 @@ export default function RootNavigator (){
                 <RootStack.Screen options={{ headerShown: false }} name="Album" component={AlbumPage} /> 
                 <RootStack.Screen options={{ headerShown: false }} name="Profile" component={UserProfilePage}  />  
                 <RootStack.Screen options={{ headerShown: false }} name="SongPlayerPage" component={SongPlayerPage}  />  
-                <RootStack.Screen options={{ headerShown: false }} name="PlaylistSongsPage" component={PlaylistSongsPage}  />                                                                                      
+                <RootStack.Screen options={{ headerShown: false }} name="PlaylistSongsPage" component={PlaylistSongsPage}  /> 
+                <RootStack.Screen options={{ headerShown: false }} name="AddToPlaylist" component={AddToPlaylist}  />                                                                                                                                                                           
             </RootStack.Navigator>            
         </NavigationContainer>
     )
