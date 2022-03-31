@@ -39,8 +39,10 @@
     "redux": "^4.1.2",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.1",
-    "expo-av": "~10.2.0"
+    "expo-av": "~10.2.0",
+    "react-devtools-core": "4.14.0"
   },
+ 
   "devDependencies": {
     "@babel/core": "^7.12.9"
   },

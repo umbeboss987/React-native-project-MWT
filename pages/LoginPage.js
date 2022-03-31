@@ -19,15 +19,7 @@ class LoginPage extends Component{
             <View style={styles.container}>
               <Image source={{uri:'https://logodownload.org/wp-content/uploads/2016/09/spotify-logo-branca-white.png'}} style={styles.image}>
               </Image>
-              <TextInput
-                style={styles.input}
-                placeholder="Username"
-
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="Password"
-              />
+              
               <LoginButton/>
             </View>
         </ImageBackground>
